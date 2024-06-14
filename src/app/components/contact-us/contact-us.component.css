@@ -1,0 +1,52 @@
+.body {
+    background: #f4f4f4;
+    min-height: 100vh;
+    margin-top: 2rem;
+    overflow: hidden;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 300px;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.quote{
+    color: #828282;
+}
+
+.right-column{
+    margin-top: 10px;
+    background-image: url('../../../assets/img/pexels-rdne-6647020.jpg');
+    width: 100%;
+    height: 80vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 1;
+    border-radius: 5px;
+}
+
+input{
+    border:1px solid black;
+    padding: 16px;
+    border-radius: 5px;
+    background: transparent;
+    margin-top: 20px;
+}
+textarea{
+    border:1px solid black;
+    padding: 16px;
+    border-radius: 5px;
+    background: transparent;
+    margin-top: 20px;
+}
+label{
+    margin-top: 10px;
+    font-weight: bold;
+}

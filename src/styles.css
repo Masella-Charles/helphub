@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'ngx-toastr/toastr';
+
+
+html,
+body {
+    height: 100%;
+}
+
+:root {
+    --primaryColor: #63be00;
+    --secondaryColor: #003848;
+    --tabPrimaryColor: var(--primary-main, #2196F3);
+    --tabSecondaryColor: var(--text-secondary, rgba(0, 0, 0, 0.60));
+}
+
+body {
+    font-family: 'Times New Roman', Times, serif;
+}

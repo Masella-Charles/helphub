@@ -1,0 +1,66 @@
+.body {
+    background: #f4f4f4;
+    min-height: 100vh;
+    margin-top: 2rem;
+    overflow: hidden;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 300px;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.quote{
+    color: #828282;
+}
+.volunteer-image{
+    margin-top: 10px;
+    background-image: url('../../../assets/img/brunette+woman+petting+two+dogs+while+volunteering+at+an+animal+shelter-min.jpg');
+    width: 100%;
+    height: 350px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 1;
+    border-radius: 5px;
+}
+
+/* .opportunities {
+    margin-top: 30px;
+} */
+
+.opportunity-cards .card {
+    /* border: 1px solid #ccc; */
+    padding: 0;
+    /* border-radius: 5px; */
+    /* background-color: #f9f9f9; */
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    /* background-color: #f9f9f9; */
+    margin: 10px 0;
+    box-shadow: #dadada 5px 5px 5px 5px;
+}
+.opportunity-cards .card-image {
+    flex: 1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    z-index: 999;
+}
+.opportunity-cards .card-content {
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}

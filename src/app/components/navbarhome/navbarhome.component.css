@@ -1,0 +1,14 @@
+.navbar {
+    font-family:Georgia;
+    background: var(--KCB-color-white, #FFF);
+    display: flex;
+    padding: 0px var(24px);
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.12), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 2px 4px -1px rgba(0, 0, 0, 0.20);
+    /* z-index: 1; */
+    /* position: fixed; */
+    width: 100%;
+}
+
+.nav-item {
+    color: black;
+}

@@ -1,0 +1,7 @@
+:host-context(.dark-mode) .body  {
+    background: #000000;
+    color: #ffffff;
+}
+.body{
+    background: #f4f4f4;
+}

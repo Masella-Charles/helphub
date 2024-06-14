@@ -1,0 +1,104 @@
+.body {
+    background: #f4f4f4;
+    min-height: 100vh;
+    margin-top: 2rem;
+}
+
+.heading {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.quote {
+    color: #828282;
+}
+
+.heading-img {
+    margin-top: 10px;
+    background-image: url('../../../assets/img/grview-82636-1.jpg');
+    width: 100%;
+    height: 350px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 1;
+    border-radius: 5px;
+}
+.read-more{
+    width:200px;
+}
+
+.opportunities {
+    margin-top: 20px;
+}
+
+.opportunity-cards .card {
+    /* border: 1px solid #ccc; */
+    padding: 0;
+    /* border-radius: 5px; */
+    /* background-color: #f9f9f9; */
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    /* background-color: #f9f9f9; */
+    margin: 10px 0;
+    box-shadow: #dadada 5px 5px 5px 5px;
+}
+.opportunity-cards .card-image {
+    flex: 1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    z-index: 999;
+}
+.opportunity-cards .card-content {
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.testimonials {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.testimonial-cards .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid transparent;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin: 10px 0;
+    box-shadow: #dadada 5px 5px 5px 5px;
+}
+
+.testimonials-bottom {
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+}
+
+.testimonials-bottom p {
+    margin-bottom: 0;
+}
+
+.testimonials-bottom svg {
+    border-radius: 50px;
+    border: #828282 1px solid;
+    padding: 5px;
+    background-color: #cacaca;
+}
+
+.testimonial-user-details {
+    /* margin-left: auto; */
+    margin-left: 2rem;
+}
