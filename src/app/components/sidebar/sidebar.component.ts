@@ -47,38 +47,29 @@ export class SidebarComponent implements OnInit {
   email: any;
   phone: any;
   userPermissions: any;
-  
+
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 768) {
-      this.collapsed = false;
-      this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
+    if (typeof window !== 'undefined') {
+      this.screenWidth = window.innerWidth;
+      if (this.screenWidth <= 768) {
+        this.collapsed = false;
+        this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
+      }
     }
+
 
   }
   constructor(private router: Router) { }
 
 
   ngOnInit(): void {
-    this.screenWidth = window.innerWidth;
-    const additionalDataString = sessionStorage.getItem('additionalData');
-    if (additionalDataString) {
-      const additionalData = JSON.parse(additionalDataString);
-      // Assign access_token, refresh_token, and user details to component variables
-      this.access_token = additionalData.access_token;
-      this.refresh_token = additionalData.refresh_token;
-      // Set user details
-      const user = additionalData.user;
-      this.userName = user.userName;
-      this.staffNo = user.staffNo;
-      this.phone = user.phone;
-      this.email = user.email;
-      this.userPermissions = user.userPermissions;
-    } else {
-      // console.log('Additional data not found in sessionStorage');
+    if (typeof window !== 'undefined') {
+      this.screenWidth = window.innerWidth;
     }
+
+    this.userName = 'Cindy Kitili'
   }
 
 
@@ -107,7 +98,7 @@ export class SidebarComponent implements OnInit {
     return this.router.url.includes(data.routeLink) ? 'active' : '';
   }
 
-  logout(){
+  logout() {
     sessionStorage.clear();
     this.router.navigate(['']);
   }

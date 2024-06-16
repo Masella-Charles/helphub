@@ -1,7 +1,5 @@
 <div class="body">
-  <app-navbarhome></app-navbarhome>
   <router-outlet name="outlet1"></router-outlet>
-  <app-footer></app-footer>
   <app-sidebar
     *ngIf="isSidebarPath(path)"
     (onToggleSideNav)="onToggleSidenav($event)">

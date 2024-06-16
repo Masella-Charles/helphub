@@ -18,6 +18,9 @@
                 <a class="nav-link" [routerLink]="['', { outlets: { outlet1: ['opportunities'] } }]">Opportunities</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" [routerLink]="['',{ outlets: { primary: 'dashboard', outlet1:null } }]">Dashboard</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" [routerLink]="['', { outlets: { outlet1: ['contactus'] } }]">Contact Us</a>
             </li>
         </ul>

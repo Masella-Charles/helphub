@@ -3,83 +3,33 @@ import { INavbarData } from "./helper";
 export const navbarData: INavbarData[] = [
     {
         routeLink: 'dashboard',
-        icon: '/assets/img/fi-ss-home.png',
+        icon: 'fa fa-home',
         label: 'Dashboard'
     },
-
     {
-        routeLink: 'products',
-        icon: '/assets/img/fi-ss-box-alt.png',
-        label: 'Products',
-        expanded: false,
-        items: [
-            {
-                routeLink: 'products/product',
-                label: 'Product',
-            },
-            {
-                routeLink: 'products/sector',
-                label: 'Sector',
-            },
-            {
-                routeLink: 'products/sectorproduct',
-                label: 'Sector Product',
-            },
-            {
-                routeLink: 'products/sopraproduct',
-                label: 'Sopra Product',
-            },
-            {
-                routeLink: 'products/loanproduct',
-                label: 'Loan Product',
-            },
-        ]
+        routeLink: 'opportunities-tracking',
+        icon: 'fa fa-area-chart',
+        label: 'Track Opportunities'
     },
     {
-        routeLink: 'partners',
-        icon: '/assets/img/fi-ss-building.png',
-        label: 'Partners',
-        expanded: false,
-        items: [
-            {
-                routeLink: 'partners/partner',
-                label: 'Partner',
-            },
-            {
-                routeLink: 'partners/season',
-                label: 'Season',
-            },
-            {
-                routeLink: 'partners/cooperative',
-                label: 'Map Cooperative',
-            },
-        ]
+        routeLink: 'track-hours',
+        icon: 'fa fa-line-chart',
+        label: 'Track Hours'
     },
     {
-        routeLink: 'settings',
-        icon: '/assets/img/fi-ss-star.png',
-        label: 'Settings',
-        expanded: false,
-        items: [
-            {
-                routeLink: 'settings/units',
-                label: 'Units',
-
-            },
-            {
-                routeLink: 'settings/users',
-                label: 'Users',
-            },
-            {
-                routeLink: 'settings/roles',
-                label: 'Roles',
-            },
-            {
-                routeLink: 'settings/permissions',
-                label: 'Permissions',
-            }
-        ]
+        routeLink: 'donor-management',
+        icon: 'fa fa-list',
+        label: 'Donor Management'
     },
-
+    {
+        routeLink: 'opportunities-posting',
+        icon: 'fa fa-list-alt',
+        label: 'Post Opportunities'
+    },
+    {
+        routeLink: 'admin-management',
+        icon: 'fa fa-user-plus',
+        label: 'Admin Management'
+    },
 
 ];

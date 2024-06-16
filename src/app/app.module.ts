@@ -39,6 +39,12 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
 import { OpportunitiesComponent } from './components/opportunities/opportunities.component';
 import { ContactUsComponent } from './components/contact-us/contact-us.component';
 import { SingleOpportunityComponent } from './components/single-opportunity/single-opportunity.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { OpportunitiesTrackingComponent } from './components/opportunities-tracking/opportunities-tracking.component';
+import { TrackHoursComponent } from './components/track-hours/track-hours.component';
+import { DonorManagementComponent } from './components/donor-management/donor-management.component';
+import { OpportunitiesPostingComponent } from './components/opportunities-posting/opportunities-posting.component';
+import { AdminManagementComponent } from './components/admin-management/admin-management.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +59,12 @@ import { SingleOpportunityComponent } from './components/single-opportunity/sing
     OpportunitiesComponent,
     ContactUsComponent,
     SingleOpportunityComponent,
+    DashboardComponent,
+    OpportunitiesTrackingComponent,
+    TrackHoursComponent,
+    DonorManagementComponent,
+    OpportunitiesPostingComponent,
+    AdminManagementComponent,
   ],
   imports: [
     BrowserModule,

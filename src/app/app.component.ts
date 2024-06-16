@@ -42,20 +42,11 @@ export class AppComponent implements OnInit{
 
   validPaths: string[] = [
     '/dashboard',
-    '/position-setup',
-    '/position-setup/aml',
-    '/position-setup/participants',
-    '/position-setup/position',
-    '/transaction-setup',
-    '/transaction-setup/charge',
-    '/transaction-setup/float',
-    '/transaction-setup/rate',
-    '/transaction-setup/recall',
-    '/settings',
-    '/settings/permission',
-    '/settings/role',
-    '/settings/screen',
-    '/settings/user',
+    '/opportunities-tracking',
+    '/track-hours',
+    '/donor-management',
+    '/opportunities-posting',
+    '/admin-management',
   ];
 
 
