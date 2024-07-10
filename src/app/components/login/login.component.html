@@ -1,0 +1,79 @@
+<div class="login-container">
+
+    <div *ngIf="isLoggedIn" class="loadersytems"></div>
+
+    <form class="login-form" (ngSubmit)="login()" #loginForm="ngForm" *ngIf="!isSignUp">
+        <h2>Welcome to HelpHub</h2>
+        <h5> <span class="logo">HH</span></h5>
+        <h2>Login</h2>
+        <div class="form-group">
+            <label for="staffNo">Email:</label>
+            <input type="text" id="email" name="email" [(ngModel)]="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <div class="password-input">
+                <input type="{{ showPassword ? 'text' : 'password' }}" id="password" name="password"
+                    [(ngModel)]="password" required>
+                <span class="toggle-btn" (click)="togglePasswordVisibility()">
+                    <i class="fa" [ngClass]="{ 'fa-eye': !showPassword, 'fa-eye-slash': showPassword }"></i>
+                </span>
+            </div>
+        </div>
+        <button type="submit" [disabled]="loginForm.invalid || loading">
+            <span *ngIf="!loading">Login</span>
+            <span *ngIf="loading">Logging in......</span>
+        </button>
+        <div class="additional-links">
+            <a>Forgot password?</a>
+            <span> | </span>
+            <a (click)="showSignUpForm()">Sign Up</a>
+        </div>
+    </form>
+
+
+
+    <form class="login-form" (ngSubmit)="signup()" #signUpForm="ngForm" *ngIf="isSignUp">
+        <h2>Welcome to HelpHub</h2>
+        <h5> <span class="logo">HH</span></h5>
+        <h2>Sign Up</h2>
+        <div class="form-group">
+            <label for="staffNo">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" [(ngModel)]="fullName" required>
+        </div>
+        <div class="form-group">
+            <label for="staffNo">Email:</label>
+            <input type="text" id="email" name="email" [(ngModel)]="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <div class="password-input">
+                <input type="{{ showPassword ? 'text' : 'password' }}" id="password" name="password"
+                    [(ngModel)]="password" required>
+                <span class="toggle-btn" (click)="togglePasswordVisibility()">
+                    <i class="fa" [ngClass]="{ 'fa-eye': !showPassword, 'fa-eye-slash': showPassword }"></i>
+                </span>
+            </div>
+        </div>
+        <button type="submit" [disabled]="signUpForm.invalid || loading">
+            <span *ngIf="!loading">Submit</span>
+            <span *ngIf="loading">Processing......</span>
+        </button>
+        <div class="additional-links">
+            <a (click)="hideSignUpForm()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <g clip-path="url(#clip0_1_10487)">
+                        <path
+                            d="M23.9999 13V11L2.55489 11.031L6.8769 6.70697L5.46289 5.29297L0.876895 9.87897C0.314481 10.4416 -0.00146484 11.2045 -0.00146484 12C-0.00146484 12.7955 0.314481 13.5584 0.876895 14.121L5.46289 18.707L6.8769 17.293L2.61489 13.031L23.9999 13Z"
+                            fill="#374957" />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_1_10487">
+                            <rect width="24" height="24" fill="white" />
+                        </clipPath>
+                    </defs>
+                </svg>
+                Back To Login</a>
+        </div>
+    </form>
+</div>

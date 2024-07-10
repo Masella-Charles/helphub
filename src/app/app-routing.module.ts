@@ -11,21 +11,24 @@ import { TrackHoursComponent } from './components/track-hours/track-hours.compon
 import { DonorManagementComponent } from './components/donor-management/donor-management.component';
 import { OpportunitiesPostingComponent } from './components/opportunities-posting/opportunities-posting.component';
 import { AdminManagementComponent } from './components/admin-management/admin-management.component';
+import { LoginComponent } from './components/login/login.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { TestimonialsComponent } from './components/testimonials/testimonials.component';
+import { CartComponent } from './components/cart/cart.component';
+import { HistoryComponent } from './components/history/history.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: HomeComponent, outlet: 'outlet1' },
+  { path: '', pathMatch: 'full', component: LoginComponent, outlet: 'outlet1' },
+  { path: 'login', component: LoginComponent, outlet: 'outlet1' },
   { path: 'home', component: HomeComponent, outlet: 'outlet1' },
   { path: 'opportunities', component: OpportunitiesComponent, outlet: 'outlet1' },
   { path: 'aboutus', component: AboutUsComponent, outlet: 'outlet1' },
   { path: 'contactus', component: ContactUsComponent, outlet: 'outlet1' },
-  { path: 'singleopportunity', component: SingleOpportunityComponent, outlet: 'outlet1' },
-
-  // { path: 'event/:id', component: EventComponent, outlet: 'outlet1' },
-  // { path: 'category/:id', component: CategoryComponent, outlet: 'outlet1' },
-  // { path: 'search/:eventName', component: SearchComponent, outlet: 'outlet1' },
-  // { path: 'cart', component: CartComponent, outlet: 'outlet1', canActivate: [AuthGuard], },
-  // { path: 'payment/:id', component: PaymentComponent, outlet: 'outlet1' },
-  // { path: 'ticket/:id', component: TicketComponent, outlet: 'outlet1' },
+  { path: 'profile', component: ProfileComponent, outlet: 'outlet1' },
+  { path: 'testimonials', component: TestimonialsComponent, outlet: 'outlet1' },
+  { path: 'cart', component: CartComponent, outlet: 'outlet1' },
+  { path: 'history', component: HistoryComponent, outlet: 'outlet1' },
+  { path: 'singleopportunity/:id', component: SingleOpportunityComponent, outlet: 'outlet1' },
 
   { path: 'dashboard', component: DashboardComponent },
   { path: 'opportunities-tracking', component: OpportunitiesTrackingComponent},

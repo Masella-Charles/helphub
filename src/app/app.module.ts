@@ -45,6 +45,11 @@ import { TrackHoursComponent } from './components/track-hours/track-hours.compon
 import { DonorManagementComponent } from './components/donor-management/donor-management.component';
 import { OpportunitiesPostingComponent } from './components/opportunities-posting/opportunities-posting.component';
 import { AdminManagementComponent } from './components/admin-management/admin-management.component';
+import { LoginComponent } from './components/login/login.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { TestimonialsComponent } from './components/testimonials/testimonials.component';
+import { CartComponent } from './components/cart/cart.component';
+import { HistoryComponent } from './components/history/history.component';
 
 @NgModule({
   declarations: [
@@ -64,12 +69,16 @@ import { AdminManagementComponent } from './components/admin-management/admin-ma
     TrackHoursComponent,
     DonorManagementComponent,
     OpportunitiesPostingComponent,
+    LoginComponent,
     AdminManagementComponent,
+    ProfileComponent,
+    TestimonialsComponent,
+    CartComponent,
+    HistoryComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -99,6 +108,7 @@ import { AdminManagementComponent } from './components/admin-management/admin-ma
       closeButton: true, 
       progressBar: true, 
     }),
+    BrowserAnimationsModule,
     
   ],
   providers: [

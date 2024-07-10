@@ -1,15 +1,17 @@
 <app-navbarhome></app-navbarhome>
 <div class="body container">
     <div class="volunteer">
-        <div class="row">
-            <div class="column " >
-                <div class="volunteer-image"></div>
+        <div class="row" *ngFor="let o of opportunity; let i = index">
+            <div class="column ">
+                <div class="volunteer-image"
+                    [style.backgroundImage]="'url(' + getImageUrl(o.opportunityResponse.opportunityImages) + ')'"></div>
             </div>
-            <div class="column " >
-                <h2  class="mt-2">Animal Shelter Help</h2>
-                <h5 class="mt-2 quote">Nairobi Animal Shelter</h5>
-                <b class="mt-3">10hrs</b>
-                <p class="mt-2 quote">"Assist in caring for animals at your local shelter. Duties include feeding, grooming, and playing with the animals."</p>
+            <div class="column ">
+                <h2 class="mt-2">{{o.opportunityResponse.name}}</h2>
+                <!-- <h5 class="mt-2 quote">Nairobi Animal Shelter</h5> -->
+                <b class="mt-3"><span class="quote">Volunteer Hours Required:</span>
+                    {{o.opportunityResponse.hours}}hrs</b>
+                <p class="mt-2 quote">"{{o.opportunityResponse.description}}"</p>
                 <button type="button" class="btn btn-dark mt-2">Volunteer</button>
             </div>
         </div>
@@ -17,59 +19,39 @@
     <br>
     <br>
     <div class="opportunities mt-5 mb-5">
-        <h2>Related Opportunities</h2>
+        <h2>Other Opportunities
+            <span class="all" [routerLink]="['', { outlets: { outlet1: ['opportunities'] } }]"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="20" height="14" viewBox="0 0 20 14" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M0.253906 6.75743C0.253906 6.57133 0.327836 6.39285 0.459432 6.26125C0.591028 6.12966 0.769511 6.05572 0.955616 6.05572H17.5061L13.0896 1.64057C12.9578 1.50881 12.8838 1.3301 12.8838 1.14376C12.8838 0.957418 12.9578 0.77871 13.0896 0.646948C13.2213 0.515185 13.4 0.441162 13.5864 0.441162C13.7727 0.441162 13.9514 0.515185 14.0832 0.646948L19.6969 6.26062C19.7622 6.32581 19.8141 6.40324 19.8494 6.48849C19.8848 6.57374 19.903 6.66514 19.903 6.75743C19.903 6.84973 19.8848 6.94112 19.8494 7.02638C19.8141 7.11163 19.7622 7.18906 19.6969 7.25424L14.0832 12.8679C13.9514 12.9997 13.7727 13.0737 13.5864 13.0737C13.4 13.0737 13.2213 12.9997 13.0896 12.8679C12.9578 12.7362 12.8838 12.5575 12.8838 12.3711C12.8838 12.1848 12.9578 12.0061 13.0896 11.8743L17.5061 7.45914H0.955616C0.769511 7.45914 0.591028 7.38521 0.459432 7.25362C0.327836 7.12202 0.253906 6.94354 0.253906 6.75743Z"
+                        fill="grey" />
+                </svg></span>
+        </h2>
         <div class="opportunity-cards">
             <div class="row mt-3">
-                <div class="col card mx-2">
-                    <div class="card-image" style="background-image: url('https://images.pexels.com/photos/7551583/pexels-photo-7551583.jpeg?auto=compress&cs=tinysrgb&w=600');"></div>
-                    <div class="card-content">
-                        <h5>Senior Companionship Program</h5>
-                        <h5 class="quote">"Spend quality time with elderly residents in nursing homes. Provide companionship, engage in activities, and brighten their day."</h5>
-                        <button type="button" class="btn btn-dark mt-2" [routerLink]="['', { outlets: { outlet1: ['singleopportunity'] } }]"
-                            style="box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.12), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.20);">
-                            Read More
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none">
-                                <path
-                                    d="M17.414 10.586L13.121 6.29297L11.707 7.70697L15 11H5V13H15L11.707 16.293L13.121 17.707L17.414 13.414C17.7889 13.0389 17.9996 12.5303 17.9996 12C17.9996 11.4696 17.7889 10.961 17.414 10.586Z"
-                                    fill="#fff" />
-                            </svg>
-                        </button>
+                <div class="col-4" *ngFor="let o of opportunities.slice(0,3); let i = index">
+                    <div class="card mx-2">
+                        <div class="card-image"
+                            [style.backgroundImage]="'url(' + getImageUrl(o.opportunityResponse.opportunityImages) + ')'">
+                        </div>
+                        <div class="card-content">
+                            <h5>{{o.opportunityResponse.name}}</h5>
+                            <h5 class="quote">"{{o.opportunityResponse.description}}"</h5>
+                            <button type="button" class="btn btn-dark mt-2"
+                                [routerLink]="['', { outlets: { outlet1: ['singleopportunity', o.opportunityResponse.id] } }]"
+                                style="box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.12), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.20);">
+                                Read More
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none">
+                                    <path
+                                        d="M17.414 10.586L13.121 6.29297L11.707 7.70697L15 11H5V13H15L11.707 16.293L13.121 17.707L17.414 13.414C17.7889 13.0389 17.9996 12.5303 17.9996 12C17.9996 11.4696 17.7889 10.961 17.414 10.586Z"
+                                        fill="#fff" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="col card mx-2">
-                    <div class="card-image" style="background-image: url('https://images.pexels.com/photos/3480494/pexels-photo-3480494.jpeg?auto=compress&cs=tinysrgb&w=600')"></div>
-                    <div class="card-content">
-                        <h5> Environmental Conservation Project</h5>
-                        <h5 class="quote">"Participate in tree planting, habitat restoration, and conservation education to protect our natural environment."</h5>
-                        <button type="button" class="btn btn-dark mt-2" [routerLink]="['', { outlets: { outlet1: ['singleopportunity'] } }]"
-                            style="box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.12), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.20);">
-                            Read More
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none">
-                                <path
-                                    d="M17.414 10.586L13.121 6.29297L11.707 7.70697L15 11H5V13H15L11.707 16.293L13.121 17.707L17.414 13.414C17.7889 13.0389 17.9996 12.5303 17.9996 12C17.9996 11.4696 17.7889 10.961 17.414 10.586Z"
-                                    fill="#fff" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                <div class="col card mx-2">
-                    <div class="card-image" style="background-image: url('https://images.pexels.com/photos/672004/pexels-photo-672004.jpeg?auto=compress&cs=tinysrgb&w=600')"></div>
-                    <div class="card-content">
-                        <h5>Animal Shelter Helper</h5>
-                        <h5 class="quote">"Assist in caring for animals at your local shelter. Duties include feeding, grooming, and playing with the animals."</h5>
-                        <button type="button" class="btn btn-dark mt-2" [routerLink]="['', { outlets: { outlet1: ['singleopportunity'] } }]"
-                            style="box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.12), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.20);">
-                            Read More
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none">
-                                <path
-                                    d="M17.414 10.586L13.121 6.29297L11.707 7.70697L15 11H5V13H15L11.707 16.293L13.121 17.707L17.414 13.414C17.7889 13.0389 17.9996 12.5303 17.9996 12C17.9996 11.4696 17.7889 10.961 17.414 10.586Z"
-                                    fill="#fff" />
-                            </svg>
-                        </button>
-                    </div>
+                    <!-- Close the row and start a new row after every 3 items -->
+                    <div *ngIf="(i + 1) % 3 === 0" class="w-100"></div>
                 </div>
             </div>
         </div>

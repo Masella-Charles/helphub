@@ -20,9 +20,12 @@
 .quote{
     color: #828282;
 }
+.all{
+    cursor: pointer;
+}
 .volunteer-image{
     margin-top: 10px;
-    background-image: url('../../../assets/img/brunette+woman+petting+two+dogs+while+volunteering+at+an+animal+shelter-min.jpg');
+    background-image: black;
     width: 100%;
     height: 350px;
     background-repeat: no-repeat;
@@ -31,22 +34,14 @@
     border-radius: 5px;
 }
 
-/* .opportunities {
-    margin-top: 30px;
-} */
-
 .opportunity-cards .card {
-    /* border: 1px solid #ccc; */
     padding: 0;
-    /* border-radius: 5px; */
-    /* background-color: #f9f9f9; */
     height: 350px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     border: 1px solid transparent;
     border-radius: 5px;
-    /* background-color: #f9f9f9; */
     margin: 10px 0;
     box-shadow: #dadada 5px 5px 5px 5px;
 }

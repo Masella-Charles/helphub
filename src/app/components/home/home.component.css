@@ -15,6 +15,9 @@
 .quote {
     color: #828282;
 }
+.all{
+    cursor: pointer;
+}
 
 .heading-img {
     margin-top: 10px;

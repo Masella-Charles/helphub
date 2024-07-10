@@ -4,55 +4,32 @@
         <div class="heading">
             <h1>HelpHub</h1>
             <h5 class="quote">Connecting You to Opportunities to Make a Difference</h5>
-            <button type="button" class="btn btn-dark" [routerLink]="['', { outlets: { outlet1: ['contactus'] } }]">Join Us Today</button>
+            <button type="button" class="btn btn-dark" [routerLink]="['', { outlets: { outlet1: ['contactus'] } }]">Join
+                Us Today</button>
 
             <div class="heading-img"></div>
         </div>
         <div class="opportunities">
-            <h1>Featured Opportunities</h1>
+            <h1>Featured Opportunities
+                <span class="all" [routerLink]="['', { outlets: { outlet1: ['opportunities'] } }]"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="20" height="14" viewBox="0 0 20 14" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M0.253906 6.75743C0.253906 6.57133 0.327836 6.39285 0.459432 6.26125C0.591028 6.12966 0.769511 6.05572 0.955616 6.05572H17.5061L13.0896 1.64057C12.9578 1.50881 12.8838 1.3301 12.8838 1.14376C12.8838 0.957418 12.9578 0.77871 13.0896 0.646948C13.2213 0.515185 13.4 0.441162 13.5864 0.441162C13.7727 0.441162 13.9514 0.515185 14.0832 0.646948L19.6969 6.26062C19.7622 6.32581 19.8141 6.40324 19.8494 6.48849C19.8848 6.57374 19.903 6.66514 19.903 6.75743C19.903 6.84973 19.8848 6.94112 19.8494 7.02638C19.8141 7.11163 19.7622 7.18906 19.6969 7.25424L14.0832 12.8679C13.9514 12.9997 13.7727 13.0737 13.5864 13.0737C13.4 13.0737 13.2213 12.9997 13.0896 12.8679C12.9578 12.7362 12.8838 12.5575 12.8838 12.3711C12.8838 12.1848 12.9578 12.0061 13.0896 11.8743L17.5061 7.45914H0.955616C0.769511 7.45914 0.591028 7.38521 0.459432 7.25362C0.327836 7.12202 0.253906 6.94354 0.253906 6.75743Z"
+                            fill="grey" />
+                    </svg></span>
+            </h1>
             <h5 class="quote">Highlighted Volunteering Opportunities</h5>
             <div class="opportunity-cards">
                 <div class="row mt-3">
-                    <div class="col card mx-2">
-                        <div class="card-image" style="background-image: url('https://images.pexels.com/photos/7551583/pexels-photo-7551583.jpeg?auto=compress&cs=tinysrgb&w=600');"></div>
-                        <div class="card-content">
-                            <h5>Senior Companionship Program</h5>
-                            <h5 class="quote">"Spend quality time with elderly residents in nursing homes. Provide companionship, engage in activities, and brighten their day."</h5>
-                            <button type="button" class="btn btn-dark mt-2" [routerLink]="['', { outlets: { outlet1: ['singleopportunity'] } }]"
-                                style="box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.12), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.20);">
-                                Read More
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none">
-                                    <path
-                                        d="M17.414 10.586L13.121 6.29297L11.707 7.70697L15 11H5V13H15L11.707 16.293L13.121 17.707L17.414 13.414C17.7889 13.0389 17.9996 12.5303 17.9996 12C17.9996 11.4696 17.7889 10.961 17.414 10.586Z"
-                                        fill="#fff" />
-                                </svg>
-                            </button>
+                    <div class="col card mx-2" *ngFor="let o of opportunity.slice(0, 3) ; let i = index;">
+                        <div class="card-image"
+                            [style.backgroundImage]="'url(' + getImageUrl(o.opportunityResponse.opportunityImages) + ')'">
                         </div>
-                    </div>
-                    <div class="col card mx-2">
-                        <div class="card-image" style="background-image: url('https://images.pexels.com/photos/3480494/pexels-photo-3480494.jpeg?auto=compress&cs=tinysrgb&w=600')"></div>
                         <div class="card-content">
-                            <h5> Environmental Conservation Project</h5>
-                            <h5 class="quote">"Participate in tree planting, habitat restoration, and conservation education to protect our natural environment."</h5>
-                            <button type="button" class="btn btn-dark mt-2" [routerLink]="['', { outlets: { outlet1: ['singleopportunity'] } }]"
-                                style="box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.12), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.20);">
-                                Read More
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none">
-                                    <path
-                                        d="M17.414 10.586L13.121 6.29297L11.707 7.70697L15 11H5V13H15L11.707 16.293L13.121 17.707L17.414 13.414C17.7889 13.0389 17.9996 12.5303 17.9996 12C17.9996 11.4696 17.7889 10.961 17.414 10.586Z"
-                                        fill="#fff" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col card mx-2">
-                        <div class="card-image" style="background-image: url('https://images.pexels.com/photos/672004/pexels-photo-672004.jpeg?auto=compress&cs=tinysrgb&w=600')"></div>
-                        <div class="card-content">
-                            <h5>Animal Shelter Helper</h5>
-                            <h5 class="quote">"Assist in caring for animals at your local shelter. Duties include feeding, grooming, and playing with the animals."</h5>
-                            <button type="button" class="btn btn-dark mt-2" [routerLink]="['', { outlets: { outlet1: ['singleopportunity'] } }]"
+                            <h5>{{o.opportunityResponse.name}}</h5>
+                            <h5 class="quote">"{{o.opportunityResponse.description}}"</h5>
+                            <button type="button" class="btn btn-dark mt-2"
+                            [routerLink]="['', { outlets: { outlet1: ['singleopportunity', o.opportunityResponse.id] } }]"
                                 style="box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.12), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.20);">
                                 Read More
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -68,13 +45,19 @@
             </div>
         </div>
         <div class="testimonials">
-            <h1>Testimonials</h1>
-            <h5 class="quote">Quotes from Volunteers and Organizations</h5>
+            <h1>Testimonials
+                <span class="all" [routerLink]="['', { outlets: { outlet1: ['testimonials'] } }]"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="20" height="14" viewBox="0 0 20 14" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M0.253906 6.75743C0.253906 6.57133 0.327836 6.39285 0.459432 6.26125C0.591028 6.12966 0.769511 6.05572 0.955616 6.05572H17.5061L13.0896 1.64057C12.9578 1.50881 12.8838 1.3301 12.8838 1.14376C12.8838 0.957418 12.9578 0.77871 13.0896 0.646948C13.2213 0.515185 13.4 0.441162 13.5864 0.441162C13.7727 0.441162 13.9514 0.515185 14.0832 0.646948L19.6969 6.26062C19.7622 6.32581 19.8141 6.40324 19.8494 6.48849C19.8848 6.57374 19.903 6.66514 19.903 6.75743C19.903 6.84973 19.8848 6.94112 19.8494 7.02638C19.8141 7.11163 19.7622 7.18906 19.6969 7.25424L14.0832 12.8679C13.9514 12.9997 13.7727 13.0737 13.5864 13.0737C13.4 13.0737 13.2213 12.9997 13.0896 12.8679C12.9578 12.7362 12.8838 12.5575 12.8838 12.3711C12.8838 12.1848 12.9578 12.0061 13.0896 11.8743L17.5061 7.45914H0.955616C0.769511 7.45914 0.591028 7.38521 0.459432 7.25362C0.327836 7.12202 0.253906 6.94354 0.253906 6.75743Z"
+                            fill="grey" />
+                    </svg></span>
+            </h1>
+            <h5 class="quote">Quotes from Volunteers and Partners</h5>
             <div class="testimonial-cards">
                 <div class="row">
-                    <div class="col card mx-2">
-                        <h5>"Volunteering through HelpHub has been a life-changing experience. I've met amazing people
-                            and made a real impact."</h5>
+                    <div class="col card mx-2" *ngFor="let t of testimonial.slice(0, 3) ; let i = index;">
+                        <h5>"{{t.testimonial}}"</h5>
                         <br>
                         <div class="testimonials-bottom mt-2">
                             <p>
@@ -96,69 +79,9 @@
                                 </svg>
                             </p>
                             <p class="testimonial-user-details">
-                                <span>Maria Anders</span>
+                                <span>{{t.userEntity.fullName}}</span>
                                 <br>
-                                <span class="quote">Volunteer</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col card mx-2">
-                        <h5>"HelpHub has been instrumental in connecting us with passionate volunteers. Our projects
-                            have never been more successful."</h5>
-                        <br>
-                        <div class="testimonials-bottom mt-2">
-                            <p>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"
-                                    fill="none">
-                                    <g clip-path="url(#clip0_1_11391)">
-                                        <path
-                                            d="M16.043 14.0006H7.957C6.64281 14.0022 5.3829 14.525 4.45363 15.4542C3.52435 16.3835 3.00159 17.6434 3 18.9576V24.0006H21V18.9576C20.9984 17.6434 20.4756 16.3835 19.5464 15.4542C18.6171 14.525 17.3572 14.0022 16.043 14.0006Z"
-                                            fill="#000000" />
-                                        <path
-                                            d="M12 12C15.3137 12 18 9.31371 18 6C18 2.68629 15.3137 0 12 0C8.68629 0 6 2.68629 6 6C6 9.31371 8.68629 12 12 12Z"
-                                            fill="#000000" />
-                                    </g>
-                                    <defs>
-                                        <clipPath id="clip0_1_11391">
-                                            <rect width="24" height="24" fill="white" />
-                                        </clipPath>
-                                    </defs>
-                                </svg>
-                            </p>
-                            <p class="testimonial-user-details">
-                                <span>John Smith</span>
-                                <br>
-                                <span class="quote">Partner</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col card mx-2">
-                        <h5>"Volunteering through HelpHub has enabled me to find purpose and new hope in life. I have
-                            seen people come together."</h5>
-                        <br>
-                        <div class="testimonials-bottom mt-2">
-                            <p>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"
-                                    fill="none">
-                                    <g clip-path="url(#clip0_1_11391)">
-                                        <path
-                                            d="M16.043 14.0006H7.957C6.64281 14.0022 5.3829 14.525 4.45363 15.4542C3.52435 16.3835 3.00159 17.6434 3 18.9576V24.0006H21V18.9576C20.9984 17.6434 20.4756 16.3835 19.5464 15.4542C18.6171 14.525 17.3572 14.0022 16.043 14.0006Z"
-                                            fill="#000000" />
-                                        <path
-                                            d="M12 12C15.3137 12 18 9.31371 18 6C18 2.68629 15.3137 0 12 0C8.68629 0 6 2.68629 6 6C6 9.31371 8.68629 12 12 12Z"
-                                            fill="#000000" />
-                                    </g>
-                                    <defs>
-                                        <clipPath id="clip0_1_11391">
-                                            <rect width="24" height="24" fill="white" />
-                                        </clipPath>
-                                    </defs>
-                                </svg>
-                            </p>
-                            <p class="testimonial-user-details">
-                                <span>Gloria Mwende</span>
-                                <br>
-                                <span class="quote">Volunteer</span>
+                                <span class="quote">{{t.userEntity.role.roleName}}</span>
                             </p>
                         </div>
                     </div>
