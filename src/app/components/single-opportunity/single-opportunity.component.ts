@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './single-opportunity.component.html',
   styleUrl: './single-opportunity.component.css'
 })
-export class SingleOpportunityComponent implements OnInit{
+export class SingleOpportunityComponent implements OnInit {
   opportunityId: any;
   loading: any;
   opportunity: any;
@@ -17,11 +17,11 @@ export class SingleOpportunityComponent implements OnInit{
   opportunities: any;
   userId: any;
 
-  constructor(private router: Router, private route: ActivatedRoute, private dataService: DataService,private toastr:ToastrService){}
+  constructor(private router: Router, private route: ActivatedRoute, private dataService: DataService, private toastr: ToastrService) { }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.opportunityId = params['id']; // Get opportunity ID from route params
-      
+
       // Call method to fetch opportunity details based on ID
       this.getOpportunitiesById(this.opportunityId);
     });
@@ -29,37 +29,37 @@ export class SingleOpportunityComponent implements OnInit{
 
     if (typeof sessionStorage !== 'undefined') {
       this.userId = sessionStorage.getItem('userId')
-      
+
     }
   }
 
 
-  getOpportunitiesById(opportunityId:any) {
+  getOpportunitiesById(opportunityId: any) {
     this.loading = true;
     let endpoint = environment.endpoint.opportunities.getById;
     const payload = {
       id: opportunityId
     };
-    
-    this.dataService.postWithPayload(endpoint,payload).subscribe(
+
+    this.dataService.postWithPayload(endpoint, payload).subscribe(
       (response: any) => {
         this.loading = false;
-        if(this.dataService.isValid(response)){
+        if (this.dataService.isValid(response)) {
           if (response.length > 0) {
             this.opportunity = response;
             console.log('opportunity', this.opportunity);
-              if (this.opportunity[0].opportunityResponse) {
-                // console.log('opportunity', opportunity);
-              } else {
-                this.info = "Fetch error, Try again later", "ERROR";
-              };
+            if (this.opportunity[0].opportunityResponse) {
+              // console.log('opportunity', opportunity);
+            } else {
+              this.info = "Fetch error, Try again later", "ERROR";
+            };
           } else {
             this.info = "Record is empty";
           }
-        }else{
+        } else {
           this.dataService.logout();
         }
-        
+
       },
       error => {
         this.loading = false;
@@ -84,26 +84,26 @@ export class SingleOpportunityComponent implements OnInit{
     const payload = {
       status: true
     };
-    
-    this.dataService.postWithPayload(endpoint,payload).subscribe(
+
+    this.dataService.postWithPayload(endpoint, payload).subscribe(
       (response: any) => {
         this.loading = false;
-        if(this.dataService.isValid(response)){
+        if (this.dataService.isValid(response)) {
           if (response.length > 0) {
             this.opportunities = response;
             console.log('opportunities', this.opportunities);
-              if (this.opportunities[0].opportunityResponse) {
-                // console.log('opportunity', opportunity);
-              } else {
-                this.info = "Fetch error, Try again later", "ERROR";
-              };
+            if (this.opportunities[0].opportunityResponse) {
+              // console.log('opportunity', opportunity);
+            } else {
+              this.info = "Fetch error, Try again later", "ERROR";
+            };
           } else {
             this.info = "Record is empty";
           }
-        }else{
+        } else {
           this.dataService.logout();
         }
-        
+
       },
       error => {
         this.loading = false;
@@ -119,22 +119,26 @@ export class SingleOpportunityComponent implements OnInit{
       userId: this.userId,
       opportunityId: this.opportunityId,
     };
-    let endpoint = environment.endpoint.users.login;
-    this.dataService.postAuth(endpoint, payload).subscribe(
+    let endpoint = environment.endpoint.opportunityUser.volunteerNow;
+    this.dataService.postWithPayload(endpoint, payload).subscribe(
       (response: any) => {
         this.loading = false;
-        if (response.token) {
-          this.toastr.success("Login successful", "SUCCESS")
-          this.router.navigate(['', { outlets: { outlet1: ['home'] } }]);
-          console.log('Login successful', response);
+        if (response.responseStatus.responseCode === "200") {
+          this.toastr.success("Added to cart successfully", "SUCCESS")
+          this.router.navigate(['', { outlets: { outlet1: ['cart'] } }]);
+          console.log('Added to cart successfully', response);
+        } else if (response.additionalInfo.includes("com.volunteer.main.entity.VolunteerEntity.getSkills()")) {
+          this.toastr.info("Add Skills to volunteer");
+          this.router.navigate(['', { outlets: { outlet1: ['profile'] } }]);
         } else {
-          this.toastr.error("Login Error, Try again later", "ERROR")
+          this.toastr.error("An error occured, Try again later", "ERROR")
         }
+
       },
       error => {
         this.loading = false;
-        console.error('Login failed', error);
-        this.toastr.error(`Login Error. ${error}`, "ERROR")
+        console.error('An error occured.', error);
+        this.toastr.error(`An error occured. ${error}`, "ERROR")
       }
     );
   }

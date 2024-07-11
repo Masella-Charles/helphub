@@ -116,22 +116,16 @@
 }
 
 .sidenav-nav .sidenav-nav-item .sidenav-nav-link .sidenav-link-icon {
-    font-size: 22px;
-    width: 1.25rem;
-    min-width: 1.25rem;
-    margin: 0 0.5rem;
-    text-align: center;
-    color: var(--text-primary, rgba(0, 0, 0, 0.87));
-    /* display: inline-block;
+    display: inline-block;
     width: 23px;
     height: 23px;
     border-radius: 50%;
     color: #fff;
     text-align: center;
-    line-height: 23px;
+    line-height: 25px;
     font-size: 13px;
     text-transform: capitalize;
-    background-color: #000; */
+    background-color: #000;
 }
 
 .sidenav-nav .sidenav-nav-item .sidenav-nav-link .sidenav-link-text {
@@ -152,7 +146,7 @@
     background: var(--primary-selected, rgba(0, 0, 0, 0.08));
 }
 
-.sidenav-nav .sidenav-nav-item:hover .sidenav-link-icon {
+.sidenav-nav .sidenav-nav-item:hover {
     color: var( rgba(0, 0, 0, 0.87));
     font-size: 14px;
     font-style: normal;
@@ -196,7 +190,6 @@
 }
 
 .active .menu-collapse-icon,
-.active .sidenav-link-icon,
 .active .sidenav-link-text {
     color: var(--text-primary, rgba(0, 0, 0, 0.87));
     font-feature-settings: 'clig' off, 'liga' off;
@@ -207,9 +200,6 @@
     line-height: 143%;
     letter-spacing: 0.17px;
 }
-
-
-
 
 .active-sublevel {
     color: var(--text-primary, rgba(0, 0, 0, 0.87));

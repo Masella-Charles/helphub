@@ -49,6 +49,7 @@ export class DataService {
     }
     return this.http.post(this.base_url + endpoint, { headers });
   }
+  
 
 
   postWithPayload(endpoint: string, payload: any): Observable<any> {

@@ -12,3 +12,6 @@
 .nav-item {
     color: black;
 }
+.dropdown-item{
+    cursor: pointer;
+}

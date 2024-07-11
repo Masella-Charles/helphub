@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { navbarData } from './nav-data';
 import { INavbarData, fadeInOut } from './helper';
+import { DataService } from '../../services/data.service';
+import { ToastrService } from 'ngx-toastr';
 
 interface SideNavToogle {
 
@@ -46,7 +48,8 @@ export class SidebarComponent implements OnInit {
   staffNo: any;
   email: any;
   phone: any;
-  userPermissions: any;
+  userPermiss: any;
+  fullName: any;
 
 
   @HostListener('window:resize', ['$event'])
@@ -61,12 +64,13 @@ export class SidebarComponent implements OnInit {
 
 
   }
-  constructor(private router: Router) { }
+  constructor(private router: Router, private dataService: DataService, private toastr: ToastrService) { }
 
 
   ngOnInit(): void {
     if (typeof window !== 'undefined') {
       this.screenWidth = window.innerWidth;
+      this.fullName = sessionStorage.getItem('fullName')
     }
 
     this.userName = 'Cindy Kitili'
@@ -99,10 +103,9 @@ export class SidebarComponent implements OnInit {
   }
 
   logout() {
-    sessionStorage.clear();
-    this.router.navigate(['']);
+    this.dataService.logout();
+    this.toastr.success("Logout Successfull", "SUCCESS");
   }
-
 
 
 

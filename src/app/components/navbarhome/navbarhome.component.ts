@@ -10,6 +10,7 @@ import { DataService } from '../../services/data.service';
   styleUrls: ['./navbarhome.component.css']
 })
 export class NavbarhomeComponent implements OnInit {
+  fullName: any;
   
 
   constructor(private toastr: ToastrService, private router: Router,private dataService: DataService) {
@@ -17,6 +18,9 @@ export class NavbarhomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (typeof sessionStorage !== 'undefined') {
+      this.fullName = sessionStorage.getItem('fullName')
+    }
   }
 
   logout(){
