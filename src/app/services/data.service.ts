@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { Opportunity, OpportunityUser } from './opportunity.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -79,5 +80,14 @@ export class DataService {
       
     }
     this.router.navigate(['']);
+  }
+
+
+  getOpportunities(): Observable<Opportunity[]> {
+    return this.http.get<Opportunity[]>(`${environment.endpoint.opportunities.list}`);
+  }
+
+  getOpportunityUsers(): Observable<OpportunityUser[]> {
+    return this.http.get<OpportunityUser[]>(`${environment.endpoint.opportunityUser.list}`);
   }
 }

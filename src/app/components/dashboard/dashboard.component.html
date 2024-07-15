@@ -1,1 +1,31 @@
-<p>dashboard works!</p>
+<div class="row">
+    <div class="col-3 card mx-2">
+        <div class="alert alert-info summary" *ngIf="opportunityinfo">
+            <h6>{{opportunityinfo}}</h6>
+        </div>
+        <div class="summary" *ngIf="!opportunityinfo">
+            <h2>{{opportunityList?.length}}</h2>
+            <h6>Volunteering Opportunities</h6>
+        </div>
+    </div>
+    <div class="col-3 card mx-2">
+        <div class="alert alert-info summary" *ngIf="volunteerinfo">
+            <h6>{{volunteerinfo}}</h6>
+        </div>
+        <div class="summary" *ngIf="!volunteerinfo">
+            <h2>{{volunteerResponse?.length}}</h2>
+            <h6>Volunteers</h6>
+        </div>
+    </div>
+    <div class="col-3 card mx-2">
+        <div class="alert alert-info summary" *ngIf="partnerinfo">
+            <h6>{{partnerinfo}}</h6>
+        </div>
+        <div class="summary" *ngIf="!partnerinfo">
+            <h2>{{partnerResponse?.length}}</h2>
+            <h6>Partners/Organizations</h6>
+        </div>
+    </div>
+
+    
+</div>

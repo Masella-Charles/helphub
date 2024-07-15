@@ -9,7 +9,9 @@ export const environment = {
         users: {
             signUp: 'auth/signup',
             login: 'auth/login',
-            profile: 'users/profile'
+            profile: 'users/profile',
+            byrole: 'users/by-role',
+            list: 'users/list'
         },
         volunteer: {
             get: 'api/v1/volunteer/get',
@@ -17,11 +19,13 @@ export const environment = {
             create: 'api/v1/volunteer/create',
             update: 'api/v1/volunteer/update',
             getByUserId: 'api/v1/volunteer/getByUserId',
-            // transition: 'api/v1/opportunityUser/transition',
-            // delete: 'api/v1/opportunityUser/delete',
         },
         roles: {
-            listAll: 'api/v1/roles/listAll',
+            get: 'api/v1/role/get',
+            list: 'api/v1/role/list',
+            create: 'api/v1/role/create',
+            update: 'api/v1/role/update',
+            delete: 'api/v1/role/delete',
         },
         permissions: {
             listAllAuthorized: 'organisations/listAllAuthorized',
@@ -59,12 +63,34 @@ export const environment = {
         },
         timesheet: {
             get: 'api/v1/timesheet/get',
+            getByUserId: 'api/v1/timesheet/getByUserId',
             list: 'api/v1/timesheet/list',
             create: 'api/v1/timesheet/create',
             update: 'api/v1/timesheet/update',
             transition: 'api/v1/timesheet/transition',
             delete: 'api/v1/timesheet/delete',
-        }
+        },
+        disasters: {
+            get: 'api/v1/disaster/get',
+            list: 'api/v1/disaster/list',
+            create: 'api/v1/disaster/create',
+            update: 'api/v1/disaster/update',
+            transition: 'api/v1/disaster/transition',
+        },
+        donations: {
+            get: 'api/v1/donation/get',
+            list: 'api/v1/donation/list',
+            create: 'api/v1/donation/create',
+            update: 'api/v1/donation/update',
+            transition: 'api/v1/donation/transition',
+        },
+        donationDistribution: {
+            get: 'api/v1/donation-distribution/get',
+            list: 'api/v1/donation-distribution/list',
+            create: 'api/v1/donation-distribution/create',
+            update: 'api/v1/donation-distribution/update',
+            delete: 'api/v1/donation-distribution/delete',
+        },
     }
 
 

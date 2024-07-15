@@ -50,6 +50,13 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { TestimonialsComponent } from './components/testimonials/testimonials.component';
 import { CartComponent } from './components/cart/cart.component';
 import { HistoryComponent } from './components/history/history.component';
+import { ContactListComponent } from './components/contact-list/contact-list.component';
+import { TestimonialListComponent } from './components/testimonial-list/testimonial-list.component';
+import { DonationDistributionComponent } from './components/donation-distribution/donation-distribution.component';
+import { DonationsComponent } from './components/donations/donations.component';
+import { DisastersListComponent } from './components/disasters-list/disasters-list.component';
+import { DisastersComponent } from './components/disasters/disasters.component';
+import { RoleComponent } from './components/role/role.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +82,13 @@ import { HistoryComponent } from './components/history/history.component';
     TestimonialsComponent,
     CartComponent,
     HistoryComponent,
+    ContactListComponent,
+    TestimonialListComponent,
+    DonationDistributionComponent,
+    DonationsComponent,
+    DisastersListComponent,
+    DisastersComponent,
+    RoleComponent,
   ],
   imports: [
     BrowserModule,

@@ -8,12 +8,12 @@ import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-track-hours',
-  templateUrl: './track-hours.component.html',
-  styleUrl: './track-hours.component.css'
+  selector: 'app-role',
+  templateUrl: './role.component.html',
+  styleUrl: './role.component.css'
 })
-export class TrackHoursComponent implements OnInit{
-  displayedColumns: string[] = ['userName', 'opportunityName','startTime', 'endTime', 'status','actions'];
+export class RoleComponent implements OnInit{
+  displayedColumns: string[] = ['roleName', 'roleDescription'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -23,6 +23,7 @@ export class TrackHoursComponent implements OnInit{
   
   loading: any;
   info: any;
+  opportunity: any;
   recordResponse: any;
 
 
@@ -36,7 +37,7 @@ export class TrackHoursComponent implements OnInit{
 
   getRecordList() {
     this.loading = true;
-    let endpoint = environment.endpoint.timesheet.list;
+    let endpoint = environment.endpoint.roles.list;
     this.dataService.getWithoutPayload(endpoint).subscribe(
       (response: any) => {
         this.loading = false;
@@ -63,8 +64,7 @@ export class TrackHoursComponent implements OnInit{
       }
     );
   }
-
-
+ 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -93,4 +93,3 @@ export class TrackHoursComponent implements OnInit{
   
 
 }
-

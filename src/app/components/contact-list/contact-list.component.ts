@@ -8,12 +8,12 @@ import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-track-hours',
-  templateUrl: './track-hours.component.html',
-  styleUrl: './track-hours.component.css'
+  selector: 'app-contact-list',
+  templateUrl: './contact-list.component.html',
+  styleUrl: './contact-list.component.css'
 })
-export class TrackHoursComponent implements OnInit{
-  displayedColumns: string[] = ['userName', 'opportunityName','startTime', 'endTime', 'status','actions'];
+export class ContactListComponent implements OnInit{
+  displayedColumns: string[] = ['id', 'name', 'email', 'message', 'stage','actions'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -23,6 +23,7 @@ export class TrackHoursComponent implements OnInit{
   
   loading: any;
   info: any;
+  opportunity: any;
   recordResponse: any;
 
 
@@ -36,7 +37,7 @@ export class TrackHoursComponent implements OnInit{
 
   getRecordList() {
     this.loading = true;
-    let endpoint = environment.endpoint.timesheet.list;
+    let endpoint = environment.endpoint.contactus.list;
     this.dataService.getWithoutPayload(endpoint).subscribe(
       (response: any) => {
         this.loading = false;
@@ -44,11 +45,18 @@ export class TrackHoursComponent implements OnInit{
           if (response.length > 0) {
             this.recordResponse = response;
             console.log('recordResponse', this.recordResponse);
+            // Check if response is an array of opportunities or a single object
+            // const opportunities = response.map((item: any) => item.opportunityResponse);
             this.dataSource = new MatTableDataSource(this.recordResponse);
             setTimeout(() => {
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
             }, 200);
+            // if (this.opportunity[0].opportunityResponse) {
+            //   // console.log('opportunity', opportunity);
+            // } else {
+            //   this.info = "Fetch error, Try again later";
+            // }
           } else {
             this.info = "Record is empty";
           }
@@ -63,8 +71,7 @@ export class TrackHoursComponent implements OnInit{
       }
     );
   }
-
-
+ 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -93,4 +100,3 @@ export class TrackHoursComponent implements OnInit{
   
 
 }
-

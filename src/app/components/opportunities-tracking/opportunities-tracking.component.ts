@@ -8,24 +8,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
 
-interface VolunteerOpportunity {
-  id: number;
-  name: string;
-  description: string;
-  date: string;
-  requiredVolunteers: number;
-  hours: number;
-  status: boolean;
-}
-
 @Component({
   selector: 'app-opportunities-tracking',
   templateUrl: './opportunities-tracking.component.html',
   styleUrl: './opportunities-tracking.component.css'
 })
 export class OpportunitiesTrackingComponent implements OnInit{
-  displayedColumns: string[] = ['id', 'name', 'description', 'date', 'requiredVolunteers', 'hours', 'status', 'actions'];
-  dataSource!: MatTableDataSource<VolunteerOpportunity>;
+  displayedColumns: string[] = ['id', 'userName', 'userEmail', 'userSkills', 'opportunityName', 'opportunityDescription', 'status', 'actions'];
+  dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -47,26 +37,19 @@ export class OpportunitiesTrackingComponent implements OnInit{
 
   getOpportunities() {
     this.loading = true;
-    let endpoint = environment.endpoint.opportunities.list;
+    let endpoint = environment.endpoint.opportunityUser.list;
     this.dataService.getWithoutPayload(endpoint).subscribe(
       (response: any) => {
         this.loading = false;
         if (this.dataService.isValid(response)) {
           if (response.length > 0) {
             this.opportunity = response;
-            // Check if response is an array of opportunities or a single object
-            const opportunities = response.map((item: any) => item.opportunityResponse);
-            this.dataSource = new MatTableDataSource(opportunities);
+            console.log('opportunity', this.opportunity);
+            this.dataSource = new MatTableDataSource(response);
             setTimeout(() => {
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
             }, 200);
-            console.log('opportunity', this.opportunity);
-            if (this.opportunity[0].opportunityResponse) {
-              // console.log('opportunity', opportunity);
-            } else {
-              this.info = "Fetch error, Try again later";
-            }
           } else {
             this.info = "Record is empty";
           }
@@ -100,17 +83,17 @@ export class OpportunitiesTrackingComponent implements OnInit{
     }
   }
 
-  edit(element: VolunteerOpportunity) {
+  edit(element: any) {
     console.log('Edit:', element);
     // Implement edit logic here
   }
 
-  delete(element: VolunteerOpportunity) {
+  delete(element: any) {
     console.log('Delete:', element);
     // Implement delete logic here
   }
 
-  approve(element: VolunteerOpportunity) {
+  approve(element: any) {
     console.log('Approve:', element);
     // Implement approve logic here
   }

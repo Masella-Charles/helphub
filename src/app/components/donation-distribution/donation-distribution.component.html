@@ -1,0 +1,89 @@
+<div class="container">
+    <div class="heading">
+        <h1>Donation Records</h1>
+    </div>
+    <div class="alert alert-info" *ngIf="info">
+        {{info}}
+    </div>
+    <div class="mat-elevation-z8" *ngIf="!info">
+        <div class="mat-toolbar">
+          <mat-form-field>
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Community">
+          </mat-form-field>
+        </div>
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          </ng-container>
+     
+          <ng-container matColumnDef="recipientName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Recipient</th>
+            <td mat-cell *matCellDef="let element">{{ element.recipientName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="amountDistributed">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount Distributed</th>
+            <td mat-cell *matCellDef="let element" class="full-number-cell">{{ formatFullNumber(element.amountDistributed) || 'N/A' }}</td>
+          </ng-container>
+    
+          <ng-container matColumnDef="quantityDistributed">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantity Distributed</th>
+            <td mat-cell *matCellDef="let element">{{ element.quantityDistributed || 'N/A' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="donorName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Donor Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.donorName  || 'N/A'}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="donationType">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Donation Type</th>
+            <td mat-cell *matCellDef="let element">{{ element.donationType  || 'N/A'}}</td>
+          </ng-container>
+          
+          <ng-container matColumnDef="donationAmount">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Donation Amount</th>
+            <td mat-cell *matCellDef="let element">{{ element.donationAmount || 'N/A'}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="commodityName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Commodity Name</th>
+            <td mat-cell *matCellDef="let element">{{ element.commodityName || 'N/A'}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="donationQuantity">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Donation Quantity</th>
+            <td mat-cell *matCellDef="let element">{{ element.donationQuantity || 'N/A'}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="donationStatus">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Donation Status</th>
+            <td mat-cell *matCellDef="let element">{{ element.donationStatus }}</td>
+          </ng-container>
+      
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="edit(element)">Edit</button>
+                <button mat-menu-item (click)="delete(element)">Delete</button>
+                <button mat-menu-item (click)="approve(element)">Approve</button>
+              </mat-menu>
+            </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+      
+</div>

@@ -47,6 +47,12 @@ export class AppComponent implements OnInit{
     '/donor-management',
     '/opportunities-posting',
     '/admin-management',
+    '/contact-list',
+    '/testimonial-list',
+    '/disasters-list',
+    '/donations',
+    '/donation-distribution',
+    '/role',
   ];
 
 

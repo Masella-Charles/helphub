@@ -8,35 +8,35 @@ import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-track-hours',
-  templateUrl: './track-hours.component.html',
-  styleUrl: './track-hours.component.css'
+  selector: 'app-donation-distribution',
+  templateUrl: './donation-distribution.component.html',
+  styleUrl: './donation-distribution.component.css'
 })
-export class TrackHoursComponent implements OnInit{
-  displayedColumns: string[] = ['userName', 'opportunityName','startTime', 'endTime', 'status','actions'];
+export class DonationDistributionComponent implements OnInit {
+  displayedColumns: string[] = ['recipientName', 'amountDistributed', 'quantityDistributed', 'donorName','donationStatus','actions'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
 
-  
+
   loading: any;
   info: any;
   recordResponse: any;
 
 
-  constructor(private dataService: DataService, private toastr:ToastrService, private router: Router){}
+  constructor(private dataService: DataService, private toastr: ToastrService, private router: Router) { }
 
 
   ngOnInit(): void {
     this.getRecordList();
-    
+
   }
 
   getRecordList() {
     this.loading = true;
-    let endpoint = environment.endpoint.timesheet.list;
+    let endpoint = environment.endpoint.donationDistribution.list;
     this.dataService.getWithoutPayload(endpoint).subscribe(
       (response: any) => {
         this.loading = false;
@@ -64,6 +64,13 @@ export class TrackHoursComponent implements OnInit{
     );
   }
 
+  formatFullNumber(value: number): string {
+    if (value === null || value === undefined) {
+      return '';
+    }
+    // Convert to a full number string with commas
+    return value.toLocaleString('en-US', { maximumFractionDigits: 20 });
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -90,7 +97,4 @@ export class TrackHoursComponent implements OnInit{
   }
 
 
-  
-
 }
-

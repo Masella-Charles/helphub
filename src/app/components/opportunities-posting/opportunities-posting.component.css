@@ -1,0 +1,9 @@
+.mat-toolbar {
+    background: white;
+    justify-content: flex-end;
+  }
+  
+  .table-container {
+    max-height: 400px;
+    overflow: auto;
+  }

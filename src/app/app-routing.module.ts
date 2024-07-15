@@ -16,6 +16,13 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { TestimonialsComponent } from './components/testimonials/testimonials.component';
 import { CartComponent } from './components/cart/cart.component';
 import { HistoryComponent } from './components/history/history.component';
+import { ContactListComponent } from './components/contact-list/contact-list.component';
+import { TestimonialListComponent } from './components/testimonial-list/testimonial-list.component';
+import { DisastersListComponent } from './components/disasters-list/disasters-list.component';
+import { DonationsComponent } from './components/donations/donations.component';
+import { DonationDistributionComponent } from './components/donation-distribution/donation-distribution.component';
+import { DisastersComponent } from './components/disasters/disasters.component';
+import { RoleComponent } from './components/role/role.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: LoginComponent, outlet: 'outlet1' },
@@ -24,6 +31,7 @@ const routes: Routes = [
   { path: 'opportunities', component: OpportunitiesComponent, outlet: 'outlet1' },
   { path: 'aboutus', component: AboutUsComponent, outlet: 'outlet1' },
   { path: 'contactus', component: ContactUsComponent, outlet: 'outlet1' },
+  { path: 'disasters', component: DisastersComponent, outlet: 'outlet1' },
   { path: 'profile', component: ProfileComponent, outlet: 'outlet1' },
   { path: 'testimonials', component: TestimonialsComponent, outlet: 'outlet1' },
   { path: 'cart', component: CartComponent, outlet: 'outlet1' },
@@ -36,6 +44,12 @@ const routes: Routes = [
   { path: 'donor-management', component: DonorManagementComponent},
   { path: 'opportunities-posting', component: OpportunitiesPostingComponent},
   { path: 'admin-management', component: AdminManagementComponent},
+  { path: 'contact-list', component: ContactListComponent},
+  { path: 'testimonial-list', component: TestimonialListComponent},
+  { path: 'disasters-list', component: DisastersListComponent},
+  { path: 'donations', component: DonationsComponent},
+  { path: 'donation-distribution', component: DonationDistributionComponent},
+  { path: 'role', component: RoleComponent}
 ];
 
 @NgModule({

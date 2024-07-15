@@ -1,0 +1,21 @@
+.mat-toolbar {
+    background: white;
+    justify-content: flex-end;
+  }
+  
+  .table-container {
+    max-height: 400px;
+    overflow: auto;
+    table-layout: auto;
+  }
+  .full-number-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 1200px; 
+  }
+  
+  .mat-cell, .mat-header-cell {
+    white-space: nowrap;
+  }
+  
