@@ -1,21 +1,143 @@
 .mat-toolbar {
-    background: white;
-    justify-content: flex-end;
-  }
-  
-  .table-container {
-    max-height: 400px;
-    overflow: auto;
-    table-layout: auto;
-  }
-  .full-number-cell {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 1200px; 
-  }
-  
-  .mat-cell, .mat-header-cell {
-    white-space: nowrap;
-  }
-  
+  background: white;
+  justify-content: flex-end;
+}
+
+.table-container {
+  max-height: 400px;
+  overflow: auto;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.heading h1 {
+  margin: 0;
+}
+
+.heading .btn {
+  margin-left: auto;
+  border-radius: 4px;
+}
+
+.recordform {
+  width: 450px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+
+.recordform .form-group {
+  margin-bottom: 15px;
+}
+
+.recordform label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #555;
+  /* Medium gray text color */
+}
+
+.recordform input {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ddd;
+  /* Light gray border */
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+.recordform input:focus {
+  outline: none;
+  border-color: #007bff;
+  /* Blue border color on focus */
+}
+
+.recordform select {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ddd;
+  /* Light gray border */
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+.recordform select:focus {
+  outline: none;
+  border-color: #007bff;
+  /* Blue border color on focus */
+}
+
+.recordform button {
+  width: 100%;
+  padding: 15px;
+  background-color: #000000;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-footer button {
+  width: 100%;
+  padding: 15px;
+  background-color: #000000;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.recordform button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.modal-header button {
+  margin-left: auto;
+}
+
+.mat-icon-button {
+  cursor: pointer;
+}
+
+/* Absolute Center Spinner */
+.loading-indicator {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Transparent Overlay */
+.loading-indicator:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal {
+  backdrop-filter: blur(0.5px);
+  /* Adjust the blur value as needed */
+  background-color: rgba(10, 10, 10, 0.5);
+  /* Adjust the background color and alpha (transparency) as needed */
+}

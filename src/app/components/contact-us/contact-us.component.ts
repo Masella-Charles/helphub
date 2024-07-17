@@ -49,7 +49,7 @@ export class ContactUsComponent implements OnInit{
       error => {
         this.loading = false;
         console.error('An error occured.', error);
-        this.toastr.error(`An error occured. ${error}`, "ERROR")
+        this.toastr.error(`An error occured: ${error.message || error.statusText || error}`, "ERROR")
       }
     );
   }

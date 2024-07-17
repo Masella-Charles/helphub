@@ -3,7 +3,7 @@
 
     <h2 style="text-align:center">User Profile Card</h2>
 
-    <div class="card" *ngIf="!profileForm && !profileEditForm">
+    <div class="card" *ngIf="!profileForm && !profileEditForm && !editPassword">
         <svg *ngIf="volunteer?.skills" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="edit"  (click)="showEditProfileForm()">
             <g clip-path="url(#clip0_1_11067)">
                 <path d="M14.604 5.68738L0 20.2904V24.0004H3.71L18.313 9.39638L14.604 5.68738Z" fill="#374957" />
@@ -49,7 +49,7 @@
     </div>
 
 
-    <form class="login-form" (ngSubmit)="createVolunteer()" #profileForm="ngForm" *ngIf="profileForm && !profileEditForm">
+    <form class="login-form" (ngSubmit)="createVolunteer()" #profileForm="ngForm" *ngIf="profileForm && !profileEditForm && !editPassword">
         <h2>Add To Profile</h2>
         <div class="form-group" hidden>
             <label for="fullName">Full Name:</label>
@@ -89,7 +89,7 @@
         </div>
     </form>
 
-    <form class="login-form" (ngSubmit)="updateVolunteer()" #profileEditForm="ngForm" *ngIf="!profileForm && profileEditForm">
+    <form class="login-form" (ngSubmit)="updateVolunteer()" #profileEditForm="ngForm" *ngIf="!profileForm && profileEditForm && !editPassword">
         <h2>Edit</h2>
         <div class="form-group" hidden>
             <label for="fullName">Full Name:</label>
@@ -113,6 +113,44 @@
         </button>
         <div class="additional-links">
             <a (click)="hideEditProfileForm()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <g clip-path="url(#clip0_1_10487)">
+                        <path
+                            d="M23.9999 13V11L2.55489 11.031L6.8769 6.70697L5.46289 5.29297L0.876895 9.87897C0.314481 10.4416 -0.00146484 11.2045 -0.00146484 12C-0.00146484 12.7955 0.314481 13.5584 0.876895 14.121L5.46289 18.707L6.8769 17.293L2.61489 13.031L23.9999 13Z"
+                            fill="#374957" />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_1_10487">
+                            <rect width="24" height="24" fill="white" />
+                        </clipPath>
+                    </defs>
+                </svg>
+                Back To My Account</a>
+                <br>
+                <a (click)="showEditPasswordForm()"><h6>Change Password</h6></a>
+        </div>
+    </form>
+
+
+
+    <form class="login-form" (ngSubmit)="editPass()" #editPasswordForm="ngForm" *ngIf="!profileForm && profileEditForm && editPassword">
+        <h2>Edit Password</h2>
+        <div class="form-group">
+            <label for="password">New Password:</label>
+            <div class="password-input">
+                <input type="{{ showPassword ? 'text' : 'password' }}" id="password" name="password"
+                    [(ngModel)]="password" required>
+                <span class="toggle-btn" (click)="togglePasswordVisibility()">
+                    <i class="fa" [ngClass]="{ 'fa-eye': !showPassword, 'fa-eye-slash': showPassword }"></i>
+                </span>
+            </div>
+        </div>
+        <button type="submit" [disabled]="editPasswordForm.invalid || loading">
+            <span *ngIf="!loading">Submit</span>
+            <span *ngIf="loading">Processing......</span>
+        </button>
+        <div class="additional-links">
+            <a (click)="hideEditPasswordForm()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <g clip-path="url(#clip0_1_10487)">
                         <path

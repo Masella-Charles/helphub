@@ -50,6 +50,7 @@ export class SidebarComponent implements OnInit {
   phone: any;
   userPermiss: any;
   fullName: any;
+  roleName:any;
 
 
   @HostListener('window:resize', ['$event'])
@@ -71,9 +72,9 @@ export class SidebarComponent implements OnInit {
     if (typeof window !== 'undefined') {
       this.screenWidth = window.innerWidth;
       this.fullName = sessionStorage.getItem('fullName')
+      this.roleName = sessionStorage.getItem('roleName')
     }
-
-    this.userName = 'Cindy Kitili'
+    this.accessControl();
   }
 
 
@@ -100,6 +101,24 @@ export class SidebarComponent implements OnInit {
 
   getActiveClass(data: INavbarData): string {
     return this.router.url.includes(data.routeLink) ? 'active' : '';
+  }
+
+  accessControl(): void {
+    const userAccess = this.roleName;
+    console.log('userAccess', userAccess)
+    const userPermissions = userAccess.split(',').map((access:any) => access.trim());
+    // Replace this with the actual access level of the user
+
+    // Filter the navbarData array based on user access level
+    const filteredNavbarData: any[] = navbarData.filter(item => {
+      const accessLevels = item.access.split(',').map(access => access.trim());
+      console.log('accessLevels', accessLevels)
+      // return accessLevels.includes(userAccess);
+      return accessLevels.some(access => userPermissions.includes(access));
+    });
+
+    // Update navbarData with the filtered data
+    this.navData = filteredNavbarData;
   }
 
   logout() {

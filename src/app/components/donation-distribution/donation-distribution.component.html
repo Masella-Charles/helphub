@@ -1,89 +1,221 @@
 <div class="container">
-    <div class="heading">
-        <h1>Donation Records</h1>
+  <div class="heading">
+    <h1>Donation Distribution Records</h1>
+    <button type="button" *ngIf="roleName == 'SYSTEM ADMIN'" class="btn btn btn-dark" (click)="createRecordmodal()">Add Donation Distribution
+      +</button>
+  </div>
+  <div class="alert alert-info" *ngIf="info">
+    {{info}}
+  </div>
+  <div class="mat-elevation-z8" *ngIf="!info">
+    <div class="mat-toolbar">
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Community">
+      </mat-form-field>
     </div>
-    <div class="alert alert-info" *ngIf="info">
-        {{info}}
-    </div>
-    <div class="mat-elevation-z8" *ngIf="!info">
-        <div class="mat-toolbar">
-          <mat-form-field>
-            <mat-label>Filter</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Community">
-          </mat-form-field>
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="recipientName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Recipient</th>
+        <td mat-cell *matCellDef="let element">{{ element.recipientName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="amountDistributed">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount Distributed</th>
+        <td mat-cell *matCellDef="let element" class="full-number-cell">{{ formatFullNumber(element.amountDistributed)
+          || 'N/A' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantityDistributed">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantity Distributed</th>
+        <td mat-cell *matCellDef="let element">{{ element.quantityDistributed || 'N/A' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="donorName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Donor Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.donorName || 'N/A'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="donationType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Donation Type</th>
+        <td mat-cell *matCellDef="let element">{{ element.donationType || 'N/A'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="donationAmount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Donation Amount</th>
+        <td mat-cell *matCellDef="let element">{{ element.donationAmount || 'N/A'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="commodityName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Commodity Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.commodityName || 'N/A'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="donationQuantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Donation Quantity</th>
+        <td mat-cell *matCellDef="let element">{{ element.donationQuantity || 'N/A'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="donationStatus">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Donation Status</th>
+        <td mat-cell *matCellDef="let element">{{ element.donationStatus }}</td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <span class="mat-icon-button" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </span>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item *ngIf="roleName == 'SYSTEM ADMIN'"  (click)="edit(element);updateRecordmodal();">Edit</button>
+            <button mat-menu-item *ngIf="roleName == 'SYSTEM ADMIN'" (click)="delete(element);deleteRecordmodal()">Delete</button>
+            <button mat-menu-item *ngIf="roleName !== 'SYSTEM ADMIN'" >--None--</button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+
+
+
+  <!-- Create Record -->
+  <div class="modal" id="createRecord" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Create Record</h3>
+          <button type="button" class="mr-auto close btn btn btn-outline-dark" data-dismiss="modal" aria-label="Close"
+            (click)="hidecreateRecordmodal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <table mat-table [dataSource]="dataSource" matSort>
-
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-          </ng-container>
-     
-          <ng-container matColumnDef="recipientName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Recipient</th>
-            <td mat-cell *matCellDef="let element">{{ element.recipientName }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="amountDistributed">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount Distributed</th>
-            <td mat-cell *matCellDef="let element" class="full-number-cell">{{ formatFullNumber(element.amountDistributed) || 'N/A' }}</td>
-          </ng-container>
-    
-          <ng-container matColumnDef="quantityDistributed">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantity Distributed</th>
-            <td mat-cell *matCellDef="let element">{{ element.quantityDistributed || 'N/A' }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="donorName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Donor Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.donorName  || 'N/A'}}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="donationType">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Donation Type</th>
-            <td mat-cell *matCellDef="let element">{{ element.donationType  || 'N/A'}}</td>
-          </ng-container>
-          
-          <ng-container matColumnDef="donationAmount">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Donation Amount</th>
-            <td mat-cell *matCellDef="let element">{{ element.donationAmount || 'N/A'}}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="commodityName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Commodity Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.commodityName || 'N/A'}}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="donationQuantity">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Donation Quantity</th>
-            <td mat-cell *matCellDef="let element">{{ element.donationQuantity || 'N/A'}}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="donationStatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Donation Status</th>
-            <td mat-cell *matCellDef="let element">{{ element.donationStatus }}</td>
-          </ng-container>
-      
-          <!-- Actions Column -->
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let element">
-              <button mat-icon-button [matMenuTriggerFor]="menu">
-                <mat-icon>more_vert</mat-icon>
+        <div class="modal-body">
+          <form class="recordform" (ngSubmit)="createRecord()" #createForm="ngForm">
+            <div class="form-group">
+              <label for="selectedProduct">Donation</label>
+              <select [(ngModel)]="selectedDonation" name="selectedProduct" [value]="selectedDonation"
+                class="form-select">
+                <option *ngFor="let d of donationResponse" [value]="d.id">
+                  Donor Name : {{d.donorName}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="recipientName">Recipient Name:</label>
+              <input type="text" id="recipientName" name="recipientName" [(ngModel)]="recipientName" required>
+            </div>
+            <div class="form-group">
+              <label for="amountDistributed">Amount Distributed:</label>
+              <input type="number" id="amountDistributed" name="amountDistributed" [(ngModel)]="amountDistributed" required>
+            </div>
+            <div class="form-group">
+              <label for="quantityDistributed">Quantity Distributed:</label>
+              <input type="text" id="quantityDistributed" name="quantityDistributed" [(ngModel)]="quantityDistributed"
+                required>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" [disabled]="createForm.invalid || loading">
+                <span *ngIf="!loading">Submit</span>
+                <span *ngIf="loading">Processing......</span>
               </button>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="edit(element)">Edit</button>
-                <button mat-menu-item (click)="delete(element)">Delete</button>
-                <button mat-menu-item (click)="approve(element)">Approve</button>
-              </mat-menu>
-            </td>
-          </ng-container>
-      
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+          </form>
+        </div>
+
       </div>
-      
+    </div>
+  </div>
+
+
+  <!-- Update Record -->
+  <div class="modal" id="updateRecord" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Edit Record</h3>
+          <button type="button" class="mr-auto close btn btn btn-outline-dark" data-dismiss="modal" aria-label="Close"
+            (click)="hideupdateRecordmodal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="recordform" (ngSubmit)="updateRecord()" #updateForm="ngForm">
+            <div class="form-group">
+              <label for="selectedProduct">Donation</label>
+              <select [(ngModel)]="selectedDonation" name="selectedProduct" [value]="selectedDonation"
+                class="form-select">
+                <option *ngFor="let d of donationResponse" [value]="d.id">
+                  Donor Name : {{d.donorName}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="recipientName">Recipient Name:</label>
+              <input type="text" id="recipientName" name="recipientName" [(ngModel)]="recipientName" required>
+            </div>
+            <div class="form-group">
+              <label for="amountDistributed">Amount Distributed:</label>
+              <input type="number" id="amountDistributed" name="amountDistributed" [(ngModel)]="amountDistributed" required>
+            </div>
+            <div class="form-group">
+              <label for="quantityDistributed">Quantity Distributed:</label>
+              <input type="text" id="quantityDistributed" name="quantityDistributed" [(ngModel)]="quantityDistributed"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="donationStatus">Donation Status:</label>
+              <input id="donationStatus" name="donationStatus" [(ngModel)]="donationStatus"
+                required>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" [disabled]="updateForm.invalid || loading">
+                <span *ngIf="!loading">Submit</span>
+                <span *ngIf="loading">Processing......</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Delete Record -->
+  <div class="modal" id="deleteRecord" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Delete Record</h3>
+          <button type="button" class="mr-auto close btn btn btn-outline-dark" data-dismiss="modal" aria-label="Close"
+            (click)="hidedeleteRecordmodal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete donation from: <b>{{donorName}}</b>
+          <div class="modal-footer">
+            <button type="submit" [disabled]="!donorName || loading" (click)="deleteRecord()">
+              <span *ngIf="!loading">Yes</span>
+              <span *ngIf="loading">Processing......</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
 </div>

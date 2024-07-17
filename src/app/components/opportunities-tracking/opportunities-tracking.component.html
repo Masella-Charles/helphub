@@ -1,81 +1,172 @@
 <div class="container">
-    <div class="heading">
-        <h1>Opportunities Tracking</h1>
-    </div>
-    <div class="alert alert-info" *ngIf="info">
-      {{info}}
+  <div class="heading">
+    <h1>Opportunities Tracking</h1>
   </div>
-    <div class="mat-elevation-z8" *ngIf="!info">
-        <div class="mat-toolbar">
-          <mat-form-field>
-            <mat-label>Filter</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Community">
-          </mat-form-field>
+
+  <div class="loading-indicator" *ngIf="loading">
+    <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+  </div>
+
+
+  <div class="alert alert-info" *ngIf="!loading && info && !errorMessage ">
+    {{info}}
+  </div>
+
+  <div class="alert alert-danger" *ngIf="!loading && !info && errorMessage ">
+    {{errorMessage}}
+  </div>
+  <div class="mat-elevation-z8" *ngIf="!loading && !info && !errorMessage ">
+    <div class="mat-toolbar">
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Community">
+      </mat-form-field>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="userName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.userName }}</td>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="userEmail">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.userEmail }}</td>
+      </ng-container>
+
+      <!-- Date Column -->
+      <ng-container matColumnDef="userSkills">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>User Skills</th>
+        <td mat-cell *matCellDef="let element">{{ element.userSkills }}</td>
+      </ng-container>
+
+      <!-- Required Volunteers Column -->
+      <ng-container matColumnDef="opportunityName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Opportunity Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.opportunityName }}</td>
+      </ng-container>
+
+      <!-- Hours Column -->
+      <ng-container matColumnDef="opportunityDescription">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Opportunity Description</th>
+        <td mat-cell *matCellDef="let element">{{ element.opportunityDescription }}</td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell *matCellDef="let element">{{ element.status ? 'Active' : 'Inactive' }}</td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element" >
+          <span class="mat-icon-button" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </span>
+          <mat-menu #menu="matMenu" >
+            <button mat-menu-item (click)="delete(element);deleteRecordmodal()" *ngIf="roleName == 'SYSTEM ADMIN'">Delete</button>
+            <button mat-menu-item *ngIf="element.status === false && roleName == 'SYSTEM ADMIN'" (click)="approve(element);approveRecordmodal()" >Approve</button>
+            <button mat-menu-item *ngIf="element.status === true && roleName == 'SYSTEM ADMIN'"(click)="deactivate(element);deactivateRecorddmodal()">Deactivate</button>
+            <button mat-menu-item *ngIf="roleName !== 'SYSTEM ADMIN'">--None--</button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+
+
+  <!-- Delete Record -->
+  <div class="modal" id="deleteRecord" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Delete Record</h3>
+          <button type="button" class="mr-auto close btn btn btn-outline-dark" data-dismiss="modal" aria-label="Close"
+            (click)="hidedeleteRecordmodal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <table mat-table [dataSource]="dataSource" matSort>
-      
-          <!-- ID Column -->
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-          </ng-container>
-      
-          <!-- Name Column -->
-          <ng-container matColumnDef="userName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.userName }}</td>
-          </ng-container>
-      
-          <!-- Description Column -->
-          <ng-container matColumnDef="userEmail">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-            <td mat-cell *matCellDef="let element">{{ element.userEmail }}</td>
-          </ng-container>
-      
-          <!-- Date Column -->
-          <ng-container matColumnDef="userSkills">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>User Skills</th>
-            <td mat-cell *matCellDef="let element">{{ element.userSkills }}</td>
-          </ng-container>
-      
-          <!-- Required Volunteers Column -->
-          <ng-container matColumnDef="opportunityName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Opportunity Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.opportunityName }}</td>
-          </ng-container>
-      
-          <!-- Hours Column -->
-          <ng-container matColumnDef="opportunityDescription">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Opportunity Description</th>
-            <td mat-cell *matCellDef="let element">{{ element.opportunityDescription }}</td>
-          </ng-container>
-      
-          <!-- Status Column -->
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-            <td mat-cell *matCellDef="let element">{{ element.status ? 'Active' : 'Inactive' }}</td>
-          </ng-container>
-      
-          <!-- Actions Column -->
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let element">
-              <button mat-icon-button [matMenuTriggerFor]="menu">
-                <mat-icon>more_vert</mat-icon>
-              </button>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="edit(element)">Edit</button>
-                <button mat-menu-item (click)="delete(element)">Delete</button>
-                <button mat-menu-item (click)="approve(element)">Approve</button>
-              </mat-menu>
-            </td>
-          </ng-container>
-      
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <div class="modal-body">
+          Are you sure you want to delete opportunity for : <b>{{userName}}</b>
+          <div class="modal-footer">
+            <button type="submit" [disabled]="!userName || loading" (click)="deleteRecord()">
+              <span *ngIf="!loading">Yes</span>
+              <span *ngIf="loading">Processing......</span>
+            </button>
+          </div>
+        </div>
+
       </div>
-      
+    </div>
+  </div>
+
+
+
+
+  <!-- Approve Record -->
+  <div class="modal" id="approveRecord" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Approve Record</h3>
+          <button type="button" class="mr-auto close btn btn btn-outline-dark" data-dismiss="modal" aria-label="Close"
+            (click)="hideapproveRecordmodal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to approve opportunity for: <b>{{userName}}</b>
+          <div class="modal-footer">
+            <button type="submit" [disabled]="!userName || loading" (click)="approveRecord(true)">
+              <span *ngIf="!loading">Yes</span>
+              <span *ngIf="loading">Processing......</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Deactivate Record -->
+  <div class="modal" id="deactivateRecord" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Deactivate Record</h3>
+          <button type="button" class="mr-auto close btn btn btn-outline-dark" data-dismiss="modal" aria-label="Close"
+            (click)="hidedeactivateRecordmodal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to deactivate opportunity for: <b>{{userName}}</b>
+          <div class="modal-footer">
+            <button type="submit" [disabled]="!userName || loading" (click)="deactivateRecord(false)">
+              <span *ngIf="!loading">Yes</span>
+              <span *ngIf="loading">Processing......</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 </div>

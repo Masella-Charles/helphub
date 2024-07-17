@@ -18,6 +18,9 @@ export class DataService {
   postAuth(endpoint: any, payload: any): Observable<any> {
     return this.http.post(this.base_url + endpoint, payload);
   }
+  updateAuth(endpoint: any, payload: any): Observable<any> {
+    return this.http.put(this.base_url + endpoint, payload);
+  }
   getCallwHeaders(endpoint: any) {
     return this.http.get(this.base_url + endpoint);
   }

@@ -18,9 +18,11 @@ export class NavbarhomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (typeof sessionStorage !== 'undefined') {
-      this.fullName = sessionStorage.getItem('fullName')
-    }
+    setTimeout(() => {
+      if (typeof sessionStorage !== 'undefined') {
+        this.fullName = sessionStorage.getItem('fullName');
+      }
+    }, 1000);
   }
 
   logout(){

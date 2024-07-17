@@ -1,54 +1,220 @@
 <div class="container">
-    <div class="heading">
-        <h1>Testimonial Records</h1>
-    </div>
-    <div class="alert alert-info" *ngIf="info">
-      {{info}}
+  <div class="heading">
+    <h1>Testimonial Records</h1>
+    <button type="button" class="btn btn btn-dark" (click)="createRecordmodal()">Add Testimonial
+      +</button>
   </div>
-    <div class="mat-elevation-z8" *ngIf="!info">
-        <div class="mat-toolbar">
-          <mat-form-field>
-            <mat-label>Filter</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Community">
-          </mat-form-field>
-        </div>
-        <table mat-table [dataSource]="dataSource" matSort>
+  <div class="loading-indicator" *ngIf="loading">
+    <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+  </div>
 
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-          </ng-container>
-     
-          <ng-container matColumnDef="testimonial">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Testimonial</th>
-            <td mat-cell *matCellDef="let element">{{ element.testimonial }}</td>
-          </ng-container>
-    
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-            <td mat-cell *matCellDef="let element">{{ element.status }}</td>
-          </ng-container>
-      
-          <!-- Actions Column -->
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let element">
-              <button mat-icon-button [matMenuTriggerFor]="menu">
-                <mat-icon>more_vert</mat-icon>
+
+  <div class="alert alert-info" *ngIf="!loading && info && !errorMessage ">
+    {{info}}
+  </div>
+
+  <div class="alert alert-danger" *ngIf="!loading && !info && errorMessage ">
+    {{errorMessage}}
+  </div>
+
+  <div class="mat-elevation-z8" *ngIf="!loading && !info && !errorMessage">
+    <div class="mat-toolbar">
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter(input?.value ?? '')" #input  placeholder="Ex. Community">
+      </mat-form-field>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="testimonial">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Testimonial</th>
+        <td mat-cell *matCellDef="let element">{{ element.testimonial }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="user">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Posted By</th>
+        <td mat-cell *matCellDef="let element">{{ element.user.fullName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="userRole">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>User Role</th>
+        <td mat-cell *matCellDef="let element">{{ element.user.role.roleName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <span class="mat-icon-button" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </span>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="edit(element);updateRecordmodal();">Edit</button>
+            <button mat-menu-item (click)="delete(element);deleteRecordmodal()">Delete</button>
+            <button mat-menu-item *ngIf="element.status === false" (click)="approve(element);approveRecordmodal()">Approve</button>
+            <button mat-menu-item *ngIf="element.status === true"(click)="deactivate(element);deactivateRecorddmodal()">Deactivate</button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+
+
+
+  <!-- Create Record -->
+  <div class="modal" id="createRecord" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Create Record</h3>
+          <button type="button" class="mr-auto close btn btn btn-outline-dark" data-dismiss="modal" aria-label="Close"
+            (click)="hidecreateRecordmodal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="recordform" (ngSubmit)="createRecord()" #createForm="ngForm">
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Testimonial</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" type="text" id="testimonial"
+                name="testimonial" [(ngModel)]="testimonial" required></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" [disabled]="createForm.invalid || loading">
+                <span *ngIf="!loading">Submit</span>
+                <span *ngIf="loading">Processing......</span>
               </button>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="edit(element)">Edit</button>
-                <button mat-menu-item (click)="delete(element)">Delete</button>
-                <button mat-menu-item (click)="approve(element)">Approve</button>
-              </mat-menu>
-            </td>
-          </ng-container>
-      
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+          </form>
+        </div>
+
       </div>
-      
+    </div>
+  </div>
+
+
+  <!-- Update Record -->
+  <div class="modal" id="updateRecord" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Edit Record</h3>
+          <button type="button" class="mr-auto close btn btn btn-outline-dark" data-dismiss="modal" aria-label="Close"
+            (click)="hideupdateRecordmodal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="recordform" (ngSubmit)="updateRecord()" #updateForm="ngForm">
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Testimonial</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" type="text" id="testimonial"
+                name="testimonial" [(ngModel)]="testimonial" required></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" [disabled]="updateForm.invalid || loading">
+                <span *ngIf="!loading">Submit</span>
+                <span *ngIf="loading">Processing......</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Delete Record -->
+  <div class="modal" id="deleteRecord" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Delete Record</h3>
+          <button type="button" class="mr-auto close btn btn btn-outline-dark" data-dismiss="modal" aria-label="Close"
+            (click)="hidedeleteRecordmodal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete : <b>{{testimonial}}</b>
+          <div class="modal-footer">
+            <button type="submit" [disabled]="!testimonial || loading" (click)="deleteRecord()">
+              <span *ngIf="!loading">Yes</span>
+              <span *ngIf="loading">Processing......</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Approve Record -->
+  <div class="modal" id="approveRecord" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Approve Record</h3>
+          <button type="button" class="mr-auto close btn btn btn-outline-dark" data-dismiss="modal" aria-label="Close"
+            (click)="hideapproveRecordmodal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to approve : <b>{{testimonial}}</b>
+          <div class="modal-footer">
+            <button type="submit" [disabled]="!testimonial || loading" (click)="approveRecord(true)">
+              <span *ngIf="!loading">Yes</span>
+              <span *ngIf="loading">Processing......</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Deactivate Record -->
+  <div class="modal" id="deactivateRecord" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Deactivate Record</h3>
+          <button type="button" class="mr-auto close btn btn btn-outline-dark" data-dismiss="modal" aria-label="Close"
+            (click)="hidedeactivateRecordmodal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to deactivate : <b>{{testimonial}}</b>
+          <div class="modal-footer">
+            <button type="submit" [disabled]="!testimonial || loading" (click)="deactivateRecord(false)">
+              <span *ngIf="!loading">Yes</span>
+              <span *ngIf="loading">Processing......</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
 </div>

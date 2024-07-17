@@ -18,6 +18,9 @@
 .user{
     cursor: pointer;
 }
+.dropdown-item{
+    cursor: pointer;
+}
 
 
 .sidenav {

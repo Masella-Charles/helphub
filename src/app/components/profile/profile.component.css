@@ -85,6 +85,28 @@ input:focus {
   border-color: #007bff;
   /* Blue border color on focus */
 }
+.password-input {
+  position: relative;
+}
+
+.password-input input {
+  padding-right: 30px;
+  /* Adjust this value according to the icon size */
+}
+
+.password-input .toggle-btn {
+  position: absolute;
+  right: 15px;
+  /* Adjust this value to position the icon inside the input */
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.password-input .toggle-btn i {
+  font-size: 16px;
+  /* Adjust this value to change the size of the icon */
+}
 
 .additional-links {
   margin-top: 20px;

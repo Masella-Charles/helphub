@@ -11,7 +11,11 @@ export const environment = {
             login: 'auth/login',
             profile: 'users/profile',
             byrole: 'users/by-role',
-            list: 'users/list'
+            list: 'users/list',
+            editUser: 'auth/editUser',
+            deleteUser: 'auth/deleteUser',
+            editPassword: 'auth/edit-password',
+            forgotPassword: 'auth/forgot-password',
         },
         volunteer: {
             get: 'api/v1/volunteer/get',
@@ -43,7 +47,7 @@ export const environment = {
             list: 'api/v1/opportunityUser/listOpportunityUser',
             volunteerNow: 'api/v1/opportunityUser/volunteerNow',
             update: 'api/v1/opportunityUser/update',
-            transition: 'api/v1/opportunityUser/transition',
+            transition: 'api/v1/opportunityUser/volunteerTransition',
             delete: 'api/v1/opportunityUser/delete',
         },
         testimonials: {

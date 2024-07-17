@@ -23,6 +23,9 @@ export class ProfileComponent implements OnInit{
   info: any;
   volunteerId: any;
   profileEditForm:any;
+  editPassword: any;
+  password: any;
+  showPassword:any;
 
 
   constructor(private router: Router, private route: ActivatedRoute, private dataService: DataService,private toastr:ToastrService){}
@@ -181,6 +184,47 @@ export class ProfileComponent implements OnInit{
         this.toastr.error(`An error occured. ${error}`, "ERROR")
       }
     );
+  }
+
+  showEditPasswordForm() {
+    this.editPassword = true;
+  }
+  hideEditPasswordForm() {
+    this.editPassword = false;
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+
+
+  editPass() {
+    this.loading = true;
+    const payload = {
+      email: this.email,
+      password: this.password,
+    };
+    let endpoint = environment.endpoint.users.editPassword;
+    this.dataService.updateAuth(endpoint, payload).subscribe(
+      (response: any) => {
+        this.loading = false;
+          this.toastr.success("Password update successful", "SUCCESS")
+          console.log('Password update successful', response);
+          this.hideEditPasswordForm();
+          this.logout();
+      },
+      error => {
+        this.loading = false;
+        console.error('Password update failed', error);
+        this.toastr.error(`An error occured: ${error.message || error.statusText || error}`, "ERROR")
+      }
+    );
+  }
+
+  logout() {
+    this.dataService.logout();
+    // this.toastr.success("Logout Successfull", "SUCCESS");
   }
 
 }

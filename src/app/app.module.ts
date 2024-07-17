@@ -57,6 +57,7 @@ import { DonationsComponent } from './components/donations/donations.component';
 import { DisastersListComponent } from './components/disasters-list/disasters-list.component';
 import { DisastersComponent } from './components/disasters/disasters.component';
 import { RoleComponent } from './components/role/role.component';
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 
 @NgModule({
   declarations: [
@@ -115,6 +116,7 @@ import { RoleComponent } from './components/role/role.component';
     MatSelectModule,
     MatProgressSpinnerModule,
     MatTabsModule,
+    CanvasJSAngularChartsModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-top-right',

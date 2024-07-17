@@ -1,81 +1,259 @@
 <div class="container">
-    <div class="heading">
-        <h1>Donation Records</h1>
+  <div class="heading">
+    <h1>Donation Records</h1>
+    <button type="button" class="btn btn btn-dark" (click)="createRecordmodal()">Add Donation
+      +</button>
+  </div>
+  <div class="loading-indicator" *ngIf="loading">
+    <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+  </div>
+
+
+  <div class="alert alert-info" *ngIf="!loading && info && !errorMessage ">
+    {{info}}
+  </div>
+
+  <div class="alert alert-danger" *ngIf="!loading && !info && errorMessage ">
+    {{errorMessage}}
+  </div>
+
+  <div class="mat-elevation-z8" *ngIf="!loading && !info && !errorMessage ">
+    <div class="mat-toolbar">
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Community">
+      </mat-form-field>
     </div>
-    <div class="alert alert-info" *ngIf="info">
-        {{info}}
-    </div>
-    <div class="mat-elevation-z8" *ngIf="!info">
-        <div class="mat-toolbar">
-          <mat-form-field>
-            <mat-label>Filter</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Community">
-          </mat-form-field>
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="donorName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Donor</th>
+        <td mat-cell *matCellDef="let element">{{ element.donorName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+        <td mat-cell *matCellDef="let element">{{ element.type || 'N/A' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+        <td mat-cell *matCellDef="let element">{{ element.amount || 'N/A' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="commodityName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Commodity Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.commodityName || 'N/A'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantity</th>
+        <td mat-cell *matCellDef="let element">{{ element.quantity || 'N/A'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="disasterEntity">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Disaster Entity</th>
+        <td mat-cell *matCellDef="let element">
+          <span *ngIf="element.disasterEntity !== null">{{ element.disasterEntity.name}}</span>
+          <span *ngIf="element.disasterEntity === null">{{'N/A'}}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <span class="mat-icon-button" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </span>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="edit(element);updateRecordmodal();">Edit</button>
+            <button mat-menu-item *ngIf="element.status === false && roleName == 'SYSTEM ADMIN'"
+              (click)="approve(element);approveRecordmodal()">Approve</button>
+            <button mat-menu-item *ngIf="element.status === true && roleName == 'SYSTEM ADMIN'"
+              (click)="deactivate(element);deactivateRecorddmodal()">Deactivate</button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+
+
+  <!-- Create Record -->
+  <div class="modal" id="createRecord" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Create Record</h3>
+          <button type="button" class="mr-auto close btn btn btn-outline-dark" data-dismiss="modal" aria-label="Close"
+            (click)="hidecreateRecordmodal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <table mat-table [dataSource]="dataSource" matSort>
+        <div class="modal-body">
+          <form class="recordform" (ngSubmit)="createRecord()" #createForm="ngForm">
+            <div class="form-group">
+              <label for="selectedProduct">Disaster</label>
+              <select [(ngModel)]="selectedDisaster" name="selectedProduct" [value]="selectedDisaster"
+                class="form-select">
+                <option *ngFor="let d of disasterResponse" [value]="d.id">
+                  {{d.name}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="donorName">Donor Name:</label>
+              <input type="text" id="donorName" name="donorName" [(ngModel)]="donorName" required>
+            </div>
+            <div class="form-group">
+              <label for="type">Type:</label>
+              <input type="text" id="type" name="type" [(ngModel)]="type" required>
+            </div>
+            <div class="form-group">
+              <label for="amount">Amount:</label>
+              <input type="number" id="amount" name="amount" [(ngModel)]="amount" required>
+            </div>
+            <div class="form-group">
+              <label for="commodityName">Commodity Name:</label>
+              <input type="text" id="commodityName" name="commodityName" [(ngModel)]="commodityName" required>
+            </div>
+            <div class="form-group">
+              <label for="quantity">Quantity:</label>
+              <input type="number" id="quantity" name="quantity" [(ngModel)]="quantity" required>
+            </div>
 
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-          </ng-container>
-     
-          <ng-container matColumnDef="donorName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Donor</th>
-            <td mat-cell *matCellDef="let element">{{ element.donorName }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
-            <td mat-cell *matCellDef="let element">{{ element.type || 'N/A' }}</td>
-          </ng-container>
-    
-          <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
-            <td mat-cell *matCellDef="let element">{{ element.amount || 'N/A' }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="commodityName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Commodity Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.commodityName  || 'N/A'}}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="quantity">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Quantity</th>
-            <td mat-cell *matCellDef="let element">{{ element.quantity  || 'N/A'}}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="disasterEntity">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Disaster Entity</th>
-            <td mat-cell *matCellDef="let element" >
-                <span *ngIf="element.disasterEntity !== null">{{ element.disasterEntity.name}}</span>
-                <span *ngIf="element.disasterEntity === null">{{'N/A'}}</span></td>
-          </ng-container>
-
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-            <td mat-cell *matCellDef="let element">{{ element.status }}</td>
-          </ng-container>
-      
-          <!-- Actions Column -->
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let element">
-              <button mat-icon-button [matMenuTriggerFor]="menu">
-                <mat-icon>more_vert</mat-icon>
+            <div class="modal-footer">
+              <button type="submit" [disabled]="createForm.invalid || loading">
+                <span *ngIf="!loading">Submit</span>
+                <span *ngIf="loading">Processing......</span>
               </button>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="edit(element)">Edit</button>
-                <button mat-menu-item (click)="delete(element)">Delete</button>
-                <button mat-menu-item (click)="approve(element)">Approve</button>
-              </mat-menu>
-            </td>
-          </ng-container>
-      
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+          </form>
+        </div>
+
       </div>
-      
+    </div>
+  </div>
+
+
+  <!-- Update Record -->
+  <div class="modal" id="updateRecord" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Edit Record</h3>
+          <button type="button" class="mr-auto close btn btn btn-outline-dark" data-dismiss="modal" aria-label="Close"
+            (click)="hideupdateRecordmodal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="recordform" (ngSubmit)="updateRecord()" #updateForm="ngForm">
+            <!-- <div class="form-group" *ngIf="selectedRow.disasterEntity !== null" >
+              <label for="selectedProduct">Disaster</label>
+              <select [(ngModel)]="selectedDisaster" name="selectedProduct" [value]="selectedDisaster"
+                class="form-select">
+                <option *ngFor="let d of disasterResponse" [value]="d.id">
+                  {{d.name}}</option>
+              </select>
+            </div> -->
+            <div class="form-group">
+              <label for="donorName">Donor Name:</label>
+              <input type="text" id="donorName" name="donorName" [(ngModel)]="donorName" required>
+            </div>
+            <div class="form-group">
+              <label for="type">Type:</label>
+              <input type="text" id="type" name="type" [(ngModel)]="type" required>
+            </div>
+            <div class="form-group">
+              <label for="amount">Amount:</label>
+              <input type="number" id="amount" name="amount" [(ngModel)]="amount" required>
+            </div>
+            <div class="form-group">
+              <label for="commodityName">Commodity Name:</label>
+              <input type="text" id="commodityName" name="commodityName" [(ngModel)]="commodityName" required>
+            </div>
+            <div class="form-group">
+              <label for="quantity">Quantity:</label>
+              <input type="number" id="quantity" name="quantity" [(ngModel)]="quantity" required>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" [disabled]="updateForm.invalid || loading">
+                <span *ngIf="!loading">Submit</span>
+                <span *ngIf="loading">Processing......</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Approve Record -->
+  <div class="modal" id="approveRecord" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Approve Record</h3>
+          <button type="button" class="mr-auto close btn btn btn-outline-dark" data-dismiss="modal" aria-label="Close"
+            (click)="hideapproveRecordmodal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to approve : <b>{{donorName}}</b>
+          <div class="modal-footer">
+            <button type="submit" [disabled]="!donorName || loading" (click)="approveRecord(true)">
+              <span *ngIf="!loading">Yes</span>
+              <span *ngIf="loading">Processing......</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Deactivate Record -->
+  <div class="modal" id="deactivateRecord" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLabel">Deactivate Record</h3>
+          <button type="button" class="mr-auto close btn btn btn-outline-dark" data-dismiss="modal" aria-label="Close"
+            (click)="hidedeactivateRecordmodal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to deactivate : <b>{{donorName}}</b>
+          <div class="modal-footer">
+            <button type="submit" [disabled]="!donorName || loading" (click)="deactivateRecord(false)">
+              <span *ngIf="!loading">Yes</span>
+              <span *ngIf="loading">Processing......</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
 </div>

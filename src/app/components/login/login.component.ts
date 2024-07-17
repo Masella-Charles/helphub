@@ -19,6 +19,7 @@ export class LoginComponent {
   showPassword: boolean = false;
   isLoggedIn: any;
   isSignUp: any;
+  forgotPassword:any
 
 
   constructor(private toastr: ToastrService, private router: Router, private dataService: DataService) { }
@@ -55,7 +56,7 @@ export class LoginComponent {
       error => {
         this.loading = false;
         console.error('Login failed', error);
-        this.toastr.error(`Login Error. ${error}`, "ERROR")
+        this.toastr.error(`An error occured: ${error.message || error.statusText || error}`, "ERROR")
       }
     );
   }
@@ -84,7 +85,7 @@ export class LoginComponent {
       error => {
         this.loading = false;
         console.error('Signup failed', error);
-        this.toastr.error(`Signup Error. ${error}`, "ERROR")
+        this.toastr.error(`An error occured: ${error.message || error.statusText || error}`, "ERROR")
       }
     );
   }
@@ -129,6 +130,37 @@ export class LoginComponent {
         this.toastr.error(`Profile fetch error. ${error}`, "ERROR");
         this.router.navigate(['']);
         sessionStorage.clear();
+      }
+    );
+  }
+
+
+  showForgotPasswordForm() {
+    this.forgotPassword = true;
+  }
+  hideForgotPasswordForm() {
+    this.forgotPassword = false;
+  }
+
+
+  forgotPass() {
+    this.loading = true;
+    const payload = {
+      email: this.email,
+      password: this.password,
+    };
+    let endpoint = environment.endpoint.users.forgotPassword;
+    this.dataService.postAuth(endpoint, payload).subscribe(
+      (response: any) => {
+        this.loading = false;
+          this.toastr.success("Password update successful", "SUCCESS")
+          console.log('Password update successful', response);
+          this.hideForgotPasswordForm();
+      },
+      error => {
+        this.loading = false;
+        console.error('Password update failed', error);
+        this.toastr.error(`An error occured: ${error.message || error.statusText || error}`, "ERROR")
       }
     );
   }
