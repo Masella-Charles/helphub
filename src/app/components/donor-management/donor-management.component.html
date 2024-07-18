@@ -153,14 +153,14 @@
                                 </span>
                             </div>
                         </div> -->
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="selectedProduct">Role</label>
                             <select [(ngModel)]="selectedRole" name="selectedProduct" [value]="selectedRole"
                                 class="form-select" required>
                                 <option *ngFor="let r of roleResponse" [value]="r.roleName">
                                     {{r.roleName}}</option>
                             </select>
-                        </div>
+                        </div> -->
                         <div class="modal-footer">
                             <button type="submit" [disabled]="updateForm.invalid || loading">
                                 <span *ngIf="!loading">Submit</span>
